@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#faf9f6">
+    <meta name="description" content="Une image de marque forte, un site utile et une présence digitale qui vous ressemble.">
+    <title>Mon espace — Donnez vie à vos idées</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="site.js" defer></script>
+  </head>
+  <body class="marketing-page">
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <header class="marketing-header">
+      <a class="marketing-brand" href="#accueil" aria-label="Mon espace, accueil">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span>mon espace<span class="brand-period">.</span></span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        id="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="main-navigation"
+        aria-label="Ouvrir le menu"
+      >
+        <span></span><span></span>
+      </button>
+
+      <nav class="main-navigation" id="main-navigation" aria-label="Navigation principale">
+        <a href="#services">Services</a>
+        <a href="#approche">Notre approche</a>
+        <a href="#contact">Le mot de bienvenue</a>
+        <button class="logout-button" id="logout-button" type="button">Se déconnecter <span aria-hidden="true">↗</span></button>
+      </nav>
+    </header>
+
+    <main id="contenu">
+      <section class="hero-section" id="accueil" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="marketing-eyebrow"><span class="eyebrow-line"></span> CRÉATIVITÉ · STRATÉGIE · DIGITAL</p>
+          <h1 id="hero-title">Les bonnes idées méritent <span>d'être vues.</span></h1>
+          <p class="hero-description">
+            Une identité qui vous ressemble, un site qui vous présente vraiment.
+            Nous donnons une forme claire et soignée à votre présence en ligne.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-link" href="#services">Découvrir les services <span aria-hidden="true">↘</span></a>
+            <a class="text-link" href="#approche">Voir notre approche</a>
+          </div>
+          <div class="hero-caption">
+            <span class="caption-star" aria-hidden="true">✳</span>
+            <span>Le beau, oui. Mais toujours avec une intention.</span>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-label="Illustration abstraite d'une création numérique" role="img">
+          <div class="art-orbit orbit-large"></div>
+          <div class="art-orbit orbit-small"></div>
+          <div class="art-sun"></div>
+          <div class="art-spark spark-one" aria-hidden="true">✳</div>
+          <div class="art-spark spark-two" aria-hidden="true">✳</div>
+          <div class="art-label art-label-top"><span></span> UNE IDÉE PREND FORME</div>
+          <div class="art-card">
+            <div class="art-card-top"><span>APERÇU CRÉATIF</span><span aria-hidden="true">↗</span></div>
+            <div class="art-card-image"><div class="art-image-shape"></div><span>façonner le futur</span></div>
+            <div class="art-card-bottom"><span>Direction artistique</span><span>01 — 03</span></div>
+          </div>
+          <div class="art-sticker"><span>fait avec</span><strong>✳</strong><span>intention</span></div>
+          <div class="art-label art-label-bottom"><span class="art-label-dot"></span> VOTRE PROJET, VOTRE SIGNATURE</div>
+        </div>
+      </section>
+
+      <section class="intro-strip" aria-label="Notre engagement">
+        <p>Une présence en ligne <span>à votre image.</span></p>
+        <span class="strip-star" aria-hidden="true">✳</span>
+        <p>Un projet pensé <span>dans le détail.</span></p>
+        <span class="strip-star" aria-hidden="true">✳</span>
+        <p>Du sens avant <span>le superflu.</span></p>
+      </section>
+
+      <section class="services-section content-section" id="services" aria-labelledby="services-title">
+        <div class="section-heading">
+          <div>
+            <p class="marketing-eyebrow"><span class="eyebrow-line"></span> CE QU'ON PEUT FAIRE ENSEMBLE</p>
+            <h2 id="services-title">De belles idées.<br><span>Du concret.</span></h2>
+          </div>
+          <p class="section-intro">
+            Tout commence par ce dont votre projet a besoin. On imagine la bonne réponse,
+            on la construit avec soin, et on garde le cap sur l'essentiel.
+          </p>
+        </div>
+
+        <div class="service-grid">
+          <article class="service-card">
+            <div class="service-topline"><span>01</span><span aria-hidden="true">↗</span></div>
+            <div class="service-icon icon-identity" aria-hidden="true"><span>m</span><i></i></div>
+            <h3>Votre identité</h3>
+            <p>Une image cohérente, reconnaissable et fidèle à votre façon de faire.</p>
+            <a href="#approche" aria-label="Découvrir notre approche pour créer votre identité">Imaginons-la <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="service-card service-card-featured">
+            <div class="service-topline"><span>02</span><span aria-hidden="true">↗</span></div>
+            <div class="service-icon icon-web" aria-hidden="true"><span></span><span></span><span></span></div>
+            <h3>Votre site web</h3>
+            <p>Une expérience simple et soignée pour présenter ce qui vous rend unique.</p>
+            <a href="#approche" aria-label="Découvrir notre approche pour créer votre site web">Construisons-le <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="service-card">
+            <div class="service-topline"><span>03</span><span aria-hidden="true">↗</span></div>
+            <div class="service-icon icon-content" aria-hidden="true"><span></span><span></span><span></span></div>
+            <h3>Votre contenu</h3>
+            <p>Des mots et des visuels qui expliquent votre valeur, sans en faire trop.</p>
+            <a href="#approche" aria-label="Découvrir notre approche pour créer votre contenu">Racontons-le <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
+      </section>
+
+      <section class="approach-section" id="approche" aria-labelledby="approach-title">
+        <div class="approach-header">
+          <div>
+            <p class="marketing-eyebrow"><span class="eyebrow-line"></span> UNE APPROCHE QUI A DU SENS</p>
+            <h2 id="approach-title">À votre écoute.<br><span>À vos côtés.</span></h2>
+          </div>
+          <p>Pas de solution toute faite. Juste la bonne méthode pour faire avancer votre idée, ensemble.</p>
+        </div>
+
+        <div class="approach-steps">
+          <article class="approach-step">
+            <span class="step-number">01 <span>— ÉCOUTER</span></span>
+            <h3>On commence par vous</h3>
+            <p>Vos envies, vos objectifs, votre réalité. On prend le temps de comprendre avant d'imaginer.</p>
+          </article>
+          <article class="approach-step">
+            <span class="step-number">02 <span>— IMAGINER</span></span>
+            <h3>On dessine le projet</h3>
+            <p>On cherche la bonne idée, le bon ton et la bonne forme pour raconter ce qui vous rend différent.</p>
+          </article>
+          <article class="approach-step">
+            <span class="step-number">03 <span>— CONCRÉTISER</span></span>
+            <h3>On construit avec soin</h3>
+            <p>On transforme l'intention en un résultat clair, cohérent et prêt à rencontrer son public.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact" aria-labelledby="contact-title">
+        <div class="contact-decoration" aria-hidden="true">✳</div>
+        <p class="marketing-eyebrow"><span class="eyebrow-line"></span> C'EST À VOUS</p>
+        <h2 id="contact-title">Chaque beau projet<br>commence par <span>une idée.</span></h2>
+        <p>Et si la prochaine était la vôtre&nbsp;?</p>
+        <div class="welcome-message" role="status">
+          <span class="welcome-dot" aria-hidden="true"></span>
+          <span>Vous êtes connecté·e sous le nom de <strong id="welcome-name">...</strong>.</span>
+          <span class="session-error" id="session-error" hidden></span>
+        </div>
+        <button class="contact-logout" id="contact-logout" type="button">Terminer ma visite <span aria-hidden="true">↗</span></button>
+      </section>
+    </main>
+
+    <footer class="marketing-footer">
+      <a class="marketing-brand footer-brand" href="#accueil">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span>mon espace<span class="brand-period">.</span></span>
+      </a>
+      <p>Une idée juste. Une présence singulière.</p>
+      <a class="back-to-top" href="#accueil">Retour en haut ↑</a>
+      <span class="footer-copyright">© <span id="year"></span> Mon espace</span>
+    </footer>
+  </body>
+</html>

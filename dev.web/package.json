@@ -1,0 +1,12 @@
+{
+  "name": "mon-espace-prive",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Un espace web protégé par mot de passe",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

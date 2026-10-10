@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101922">
+    <title>Accès privé — Mon espace</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="login.js" defer></script>
+  </head>
+  <body class="login-page">
+    <main class="login-layout">
+      <section class="welcome-panel" aria-labelledby="welcome-title">
+        <a class="brand" href="/" aria-label="Mon espace, accueil">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span>mon espace<span class="brand-period">.</span></span>
+        </a>
+
+        <div class="welcome-copy">
+          <p class="eyebrow"><span class="status-dot"></span> Un espace rien qu’à vous</p>
+          <h1 id="welcome-title">Le bon endroit<br>pour <span>commencer.</span></h1>
+          <p class="welcome-description">
+            Connectez-vous pour découvrir votre espace personnel. Une petite présentation,
+            puis vous êtes chez vous.
+          </p>
+        </div>
+
+        <div class="panel-note">
+          <span class="note-icon" aria-hidden="true">✳</span>
+          <p>Simple, privé, et prêt à vous accueillir.</p>
+        </div>
+        <span class="decorative-orb orb-one" aria-hidden="true"></span>
+        <span class="decorative-orb orb-two" aria-hidden="true"></span>
+      </section>
+
+      <section class="form-panel" aria-labelledby="form-title">
+        <div class="form-wrap">
+          <p class="mobile-brand">mon espace<span class="brand-period">.</span></p>
+          <p class="eyebrow form-eyebrow">BON RETOUR</p>
+          <h2 id="form-title">On fait connaissance&nbsp;?</h2>
+          <p class="form-intro">Saisissez votre nom d’utilisateur et votre mot de passe pour continuer.</p>
+
+          <form id="login-form" novalidate>
+            <label for="display-name">Nom d’utilisateur</label>
+            <input
+              id="display-name"
+              name="name"
+              type="text"
+              placeholder="Votre nom d’utilisateur"
+              autocomplete="given-name"
+              maxlength="40"
+              required
+            >
+
+            <div class="password-heading">
+              <label for="password">Mot de passe</label>
+              <span class="lock-label"><span aria-hidden="true">●</span> Connexion privée</span>
+            </div>
+            <div class="password-field">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Votre mot de passe"
+                autocomplete="current-password"
+                required
+              >
+              <button class="password-toggle" type="button" aria-label="Afficher le mot de passe" aria-pressed="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"></path>
+                  <circle cx="12" cy="12" r="2.5"></circle>
+                </svg>
+              </button>
+            </div>
+
+            <p id="login-message" class="login-message" role="alert" aria-live="polite"></p>
+            <button class="submit-button" type="submit">
+              <span>Entrer dans mon espace</span>
+              <span class="button-arrow" aria-hidden="true">→</span>
+            </button>
+          </form>
+
+          <p class="privacy-note">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <rect x="4" y="8" width="12" height="9" rx="2"></rect>
+              <path d="M7 8V5.5a3 3 0 0 1 6 0V8"></path>
+            </svg>
+            Vos informations restent privées.
+          </p>
+        </div>
+        <footer class="form-footer"><span>Un espace personnel, à votre rythme.</span><span>© <span id="year"></span></span></footer>
+      </section>
+    </main>
+  </body>
+</html>
