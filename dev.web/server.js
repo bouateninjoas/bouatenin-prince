@@ -17,6 +17,8 @@ const publicFiles = new Map([
   ["/style.css", ["style.css", "text/css; charset=utf-8"]],
   ["/login.js", ["login.js", "text/javascript; charset=utf-8"]],
   ["/site.js", ["site.js", "text/javascript; charset=utf-8"]],
+  ["/bus.css", ["bus.css", "text/css; charset=utf-8"]],
+  ["/bus.js", ["bus.js", "text/javascript; charset=utf-8"]],
 ]);
 
 if (!username || !isValidName(username)) {
@@ -45,7 +47,7 @@ function setSecurityHeaders(response) {
   response.setHeader("Cache-Control", "no-store");
   response.setHeader(
     "Content-Security-Policy",
-    "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'; object-src 'none'",
+    "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'; object-src 'none'",
   );
 }
 
@@ -171,7 +173,7 @@ async function handleRequest(request, response) {
 
   if (request.method === "GET" && url.pathname === "/") {
     if (session) {
-      serveFile(response, "site.html", "text/html; charset=utf-8");
+      serveFile(response, "bus.html", "text/html; charset=utf-8");
     } else {
       serveFile(response, "index.html", "text/html; charset=utf-8");
     }

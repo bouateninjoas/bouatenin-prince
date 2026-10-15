@@ -164,6 +164,143 @@ main {
     0 3px 12px rgb(66 54 112 / 4%);
 }
 
+.problem-card {
+  margin-top: 18px;
+  padding: clamp(20px, 4vw, 32px);
+  border: 1px solid rgb(85 68 133 / 9%);
+  border-radius: 17px;
+  background: rgb(255 255 255 / 95%);
+  box-shadow:
+    0 26px 80px rgb(66 54 112 / 8%),
+    0 3px 12px rgb(66 54 112 / 4%);
+}
+
+.problem-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 15px;
+}
+
+.problem-number {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 12px;
+  color: #527553;
+  background: #e9f2e6;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+}
+
+.problem-number-lilac {
+  color: #6453b0;
+  background: #f1edff;
+}
+
+.problem-heading .eyebrow {
+  font-size: 8px;
+}
+
+.problem-heading h2 {
+  margin: 5px 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(20px, 3vw, 25px);
+  font-weight: 400;
+  letter-spacing: -0.5px;
+}
+
+.problem-description,
+.parameter-note,
+.precision-note {
+  color: #777387;
+  font-size: 11px;
+  line-height: 1.75;
+}
+
+.problem-description {
+  margin: 0 0 16px;
+}
+
+.problem-card code {
+  font-family: Consolas, "Courier New", monospace;
+}
+
+.problem-card pre {
+  overflow-x: auto;
+  margin: 0;
+  padding: 17px;
+  border: 1px solid #eeebf2;
+  border-radius: 10px;
+  color: #39354a;
+  background: #fcfbfe;
+  font-size: 11px;
+  line-height: 1.7;
+  tab-size: 2;
+}
+
+.problem-card pre code {
+  font-family: Consolas, "Courier New", monospace;
+}
+
+.example-result {
+  margin-top: 14px;
+  padding: 13px 15px;
+  border-radius: 9px;
+  background: #f0f5eb;
+  font-size: 10px;
+}
+
+.example-result > span {
+  color: #697a5e;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.example-result p {
+  margin: 7px 0 5px;
+  color: #777387;
+}
+
+.example-result strong {
+  color: #445c42;
+}
+
+.subheading {
+  margin: 24px 0 7px;
+  color: #4f4967;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.parameter-note {
+  margin: 0 0 11px;
+}
+
+.parameter-note strong {
+  color: #544c6d;
+}
+
+.parameter-note code,
+.precision-note code {
+  padding: 1px 4px;
+  border-radius: 4px;
+  color: #6555b1;
+  background: #f1edff;
+  font-size: 0.95em;
+}
+
+.precision-note {
+  margin: 13px 0 0;
+  padding: 11px 13px;
+  border-left: 2px solid #b7a9f1;
+  background: #faf9fe;
+}
+
 .input-heading {
   display: flex;
   align-items: center;
@@ -558,6 +695,16 @@ main {
   .analyzer-card {
     padding: 20px 16px;
     border-radius: 13px;
+  }
+
+  .problem-card {
+    padding: 20px 16px;
+    border-radius: 13px;
+  }
+
+  .problem-card pre {
+    padding: 13px;
+    font-size: 10px;
   }
 
   #phrase {

@@ -4,98 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f5f2ff">
-    <meta name="description" content="Un petit atelier pour explorer les mots de votre phrase.">
-    <title>Motif — atelier de phrase</title>
+    <meta name="description" content="Solutions algorithmiques sur les ensembles et les produits scalaires.">
+    <title>Algorithmes — ensembles et produit scalaire</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
   </head>
   <body>
     <div class="page-shell">
       <header class="topbar">
-        <a class="wordmark" href="#" aria-label="Motif, accueil">
-          <span class="wordmark-icon" aria-hidden="true">m<span>.</span></span>
-          <span>motif</span>
+        <a class="wordmark" href="#" aria-label="Algorithmes, accueil">
+          <span class="wordmark-icon" aria-hidden="true">a<span>.</span></span>
+          <span>algorithmes</span>
         </a>
-        <p class="topbar-note"><span class="online-dot"></span> UN PETIT ATELIER POUR LES MOTS</p>
-      </header>
+        <p class="topbar-note"><span class="topbar-star" aria-hidden="true">✳</span> Tableaux, procédures et fonctions</p>
 
       <main>
         <section class="intro" aria-labelledby="page-title">
-          <span class="eyebrow"><span class="eyebrow-star" aria-hidden="true">✳</span> GRAMMAIRE, MAIS EN DOUCEUR</span>
-          <h1 id="page-title">Chaque phrase<br>a son <span>petit motif.</span></h1>
-          <p>Quelques mots suffisent pour voir ce qui se cache derrière une phrase.</p>
+          <span class="eyebrow"><span class="eyebrow-star" aria-hidden="true">✳</span> TABLEAUX &amp; VECTEURS</span>
+          <h1 id="page-title">Deux problèmes,<br><span>pas à pas.</span></h1>
+          <p>Des algorithmes en pseudo-code, avec tableaux, boucles et paramètres.</p>
         </section>
 
-        <section class="analyzer-card" aria-label="Analyse de phrase">
-          <form id="analyzer-form" novalidate>
-            <div class="input-heading">
-              <label for="phrase">Votre phrase</label>
-              <span class="input-hint">N’oubliez pas le point final <span aria-hidden="true">·</span></span>
+        <section class="problem-card" aria-labelledby="problem-one-title">
+          <div class="problem-heading">
+            <span class="problem-number">01</span>
+            <div>
+              <span class="eyebrow">ENSEMBLES &amp; TABLEAUX</span>
+              <h2 id="problem-one-title">Somme des éléments distincts</h2>
             </div>
-            <textarea
-              id="phrase"
-              name="phrase"
-              rows="4"
-              maxlength="500"
-              placeholder="Les idées prennent forme quand on les partage."
-              aria-describedby="character-count error-message"
-              required
-            ></textarea>
-            <div class="input-footer">
-              <span id="character-count">0 / 500</span>
-              <button class="sample-button" id="sample-button" type="button">
-                <span aria-hidden="true">✳</span> Essayer un exemple
-              </button>
-            </div>
-            <p class="error-message" id="error-message" role="alert" aria-live="polite"></p>
-            <button class="analyze-button" type="submit">
-              <span>Analyser ma phrase</span>
-              <span class="analyze-arrow" aria-hidden="true">↗</span>
-            </button>
-          </form>
+          </div>
+          <p class="problem-description">
+            Additionner les valeurs présentes dans un seul des deux ensembles (différence
+            symétrique). Les tableaux représentent des ensembles, donc ne contiennent pas
+            de doublons.
+          </p>
+          <pre><code>Algorithme SommeDistincts
+Variables
+  A, B : tableaux d'entiers
+  nA, nB, i, j, somme : entier
+  present : booléen
+Début
+  Lire nA, nB
+  Lire A[1..nA], B[1..nB]
+  somme ← 0
 
-          <section class="results" id="results" aria-labelledby="results-title" aria-live="polite" hidden>
-            <div class="results-heading">
-              <div>
-                <span class="eyebrow results-eyebrow">VOTRE PHRASE DÉCRYPTÉE</span>
-                <h2 id="results-title">Voilà son motif<span>.</span></h2>
-              </div>
-              <span class="results-stamp" aria-hidden="true">✳</span>
-            </div>
-            <div class="stats-grid">
-              <article class="stat-card">
-                <span class="stat-index">01 <span>— MESURE</span></span>
-                <span class="stat-number" id="character-result">0</span>
-                <span class="stat-label">caractères <span>(hors point final)</span></span>
-                <span class="stat-decoration decoration-line" aria-hidden="true"></span>
-              </article>
-              <article class="stat-card stat-card-lilac">
-                <span class="stat-index">02 <span>— RYTHME</span></span>
-                <span class="stat-number" id="word-result">0</span>
-                <span class="stat-label">mots</span>
-                <span class="stat-decoration decoration-words" aria-hidden="true">a&nbsp; b&nbsp; c</span>
-              </article>
-              <article class="stat-card stat-card-peach">
-                <span class="stat-index">03 <span>— MUSIQUE</span></span>
-                <span class="stat-number" id="vowel-result">0</span>
-                <span class="stat-label">voyelles</span>
-                <span class="stat-decoration decoration-spark" aria-hidden="true">✳</span>
-              </article>
-            </div>
-            <div class="results-footer">
-              <span class="results-check" aria-hidden="true">✓</span>
-              <p><strong>Juste pour vous.</strong> Votre texte reste dans votre navigateur.</p>
-              <button class="reset-button" id="reset-button" type="button">Recommencer <span aria-hidden="true">↺</span></button>
-            </div>
-          </section>
+  Pour i de 1 à nA faire
+    present ← Faux
+    Pour j de 1 à nB faire
+      Si A[i] = B[j] alors
+        present ← Vrai
+      FinSi
+    FinPour
+    Si NON present alors
+      somme ← somme + A[i]
+    FinSi
+  FinPour
+
+  Pour i de 1 à nB faire
+    present ← Faux
+    Pour j de 1 à nA faire
+      Si B[i] = A[j] alors
+        present ← Vrai
+      FinSi
+    FinPour
+    Si NON present alors
+      somme ← somme + B[i]
+    FinSi
+  FinPour
+
+  Afficher somme
+Fin</code></pre>
+          <div class="example-result">
+            <span>Exemple</span>
+            <p>A = [3, 1, 7, 9] &nbsp;·&nbsp; B = [2, 4, 1, 9, 3]</p>
+            <strong>Somme : 7 + 2 + 4 = 13</strong>
+          </div>
         </section>
 
-        <p class="page-footnote"><span aria-hidden="true">✳</span> Un outil simple, pour regarder les phrases autrement.</p>
+        <section class="problem-card" aria-labelledby="problem-two-title">
+          <div class="problem-heading">
+            <span class="problem-number problem-number-lilac">02</span>
+            <div>
+              <span class="eyebrow">VECTEURS DE ℝ</span>
+              <h2 id="problem-two-title">Produit scalaire</h2>
+            </div>
+          </div>
+          <p class="problem-description">
+            Les vecteurs sont représentés par des tableaux de même dimension <code>m</code>.
+            Le produit scalaire est la somme des produits de leurs composantes.
+          </p>
+
+          <h3 class="subheading">A. Avec une procédure</h3>
+          <p class="parameter-note"><strong>Passage des paramètres :</strong> <code>v1</code>, <code>v2</code> et <code>m</code> en entrée ; <code>ps</code> en sortie (modifié par la procédure).</p>
+          <pre><code>Procédure dot_product(v1, v2 : tableaux de réel ;
+                      m : entier ; Sortie ps : réel)
+Variables
+  k : entier
+Début
+  ps ← 0
+  Pour k de 1 à m faire
+    ps ← ps + v1[k] × v2[k]
+  FinPour
+FinProcédure
+
+Algorithme Orthogonalite
+Variables
+  v1, v2 : tableaux de réel
+  n, m, i : entier
+  ps : réel
+Début
+  Lire n, m
+  Pour i de 1 à n faire
+    Lire v1[1..m], v2[1..m]
+    dot_product(v1, v2, m, ps)
+    Si ps = 0 alors
+      Afficher "Les vecteurs sont orthogonaux"
+    Sinon
+      Afficher "Les vecteurs ne sont pas orthogonaux"
+    FinSi
+  FinPour
+Fin</code></pre>
+
+          <h3 class="subheading">B. Avec une fonction</h3>
+          <p class="parameter-note"><strong>Valeur retournée :</strong> la fonction renvoie directement le produit scalaire ; aucun paramètre de sortie n'est nécessaire.</p>
+          <pre><code>Fonction dot_product(v1, v2 : tableaux de réel ; m : entier) : réel
+Variables
+  k : entier
+  ps : réel
+Début
+  ps ← 0
+  Pour k de 1 à m faire
+    ps ← ps + v1[k] × v2[k]
+  FinPour
+  Retourner ps
+FinFonction
+
+Algorithme OrthogonaliteAvecFonction
+Variables
+  v1, v2 : tableaux de réel
+  n, m, i : entier
+Début
+  Lire n, m
+  Pour i de 1 à n faire
+    Lire v1[1..m], v2[1..m]
+    Si dot_product(v1, v2, m) = 0 alors
+      Afficher "Les vecteurs sont orthogonaux"
+    Sinon
+      Afficher "Les vecteurs ne sont pas orthogonaux"
+    FinSi
+  FinPour
+Fin</code></pre>
+          <p class="precision-note">
+            En calcul numérique sur des réels, on remplace généralement le test exact
+            <code>ps = 0</code> par <code>|ps| ≤ ε</code>, où <code>ε</code> est une petite tolérance.
+          </p>
+        </section>
+
+        <p class="page-footnote"><span aria-hidden="true">✳</span> Les deux versions du produit scalaire calculent le même résultat.</p>
       </main>
 
       <footer class="site-footer">
-        <span>motif<span class="footer-period">.</span></span>
-        <span>FAIT AVEC CURIOSITÉ</span>
+        <span>algorithmes<span class="footer-period">.</span></span>
+        <span>TABLEAUX · PROCÉDURES · FONCTIONS</span>
       </footer>
     </div>
   </body>
