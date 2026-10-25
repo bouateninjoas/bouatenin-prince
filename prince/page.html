@@ -3,169 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f7f7f4">
-  <title>Votre panier | Everyday</title>
+  <title>Changeur de couleurs</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="#" aria-label="Everyday, accueil">
-      <span class="brand-mark" aria-hidden="true">e</span>
-      <span>everyday</span>
-    </a>
-    <a class="header-cart" href="#shopping-cart" aria-label="Voir le panier">
-      <span>Mon panier</span>
-      <span class="cart-count" data-cart-count>3</span>
-    </a>
-  </header>
-
-  <main class="page-shell">
-    <div class="breadcrumb" aria-label="Fil d’Ariane">
-      <a href="#">Accueil</a>
-      <span aria-hidden="true">/</span>
-      <span>Panier</span>
-    </div>
-
-    <section class="shopping-cart" id="shopping-cart" aria-labelledby="page-title">
-      <div class="cart-heading">
-        <div>
-          <p class="eyebrow">Votre sélection</p>
-          <h1 id="page-title">Mon panier</h1>
-        </div>
-        <p class="cart-item-count" data-item-count aria-live="polite">3 articles</p>
-      </div>
-
-      <div class="cart-layout">
-        <div class="cart-items" id="cart-items" aria-label="Articles dans votre panier">
-          <article class="card" data-price="100">
-            <div class="product-image product-image-baskets">
-              <img src="assets/baskets.png" alt="Baskets rose poudré">
-            </div>
-            <div class="card-body">
-              <div class="product-details">
-                <div>
-                  <p class="product-category">Chaussures</p>
-                  <h2>Baskets</h2>
-                  <p class="product-description">Une paire confortable pour tous les jours.</p>
-                </div>
-                <p class="unit-price">100,00&nbsp;$</p>
-              </div>
-              <div class="product-actions">
-                <div class="quantity-control" aria-label="Quantité de Baskets">
-                  <button class="quantity-button" type="button" data-action="decrease" aria-label="Diminuer la quantité de Baskets" disabled>-</button>
-                  <output class="quantity" data-quantity aria-live="polite">1</output>
-                  <button class="quantity-button" type="button" data-action="increase" aria-label="Augmenter la quantité de Baskets">+</button>
-                </div>
-                <div class="item-actions">
-                  <button class="icon-button like-button" type="button" data-action="like" aria-label="Ajouter Baskets aux favoris" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
-                    <span>J’aime</span>
-                  </button>
-                  <button class="icon-button remove-button" type="button" data-action="remove" aria-label="Supprimer Baskets du panier">
-                    <img src="assets/delete.png" alt="">
-                    <span>Supprimer</span>
-                  </button>
-                </div>
-                <p class="line-total" aria-label="Total pour Baskets"><output data-line-total>100,00&nbsp;$</output></p>
-              </div>
-            </div>
-          </article>
-
-          <article class="card" data-price="20">
-            <div class="product-image product-image-socks">
-              <img src="assets/socks.png" alt="Chaussettes">
-            </div>
-            <div class="card-body">
-              <div class="product-details">
-                <div>
-                  <p class="product-category">Accessoires</p>
-                  <h2>Socks</h2>
-                  <p class="product-description">Des chaussettes douces et faciles à porter.</p>
-                </div>
-                <p class="unit-price">20,00&nbsp;$</p>
-              </div>
-              <div class="product-actions">
-                <div class="quantity-control" aria-label="Quantité de Socks">
-                  <button class="quantity-button" type="button" data-action="decrease" aria-label="Diminuer la quantité de Socks" disabled>-</button>
-                  <output class="quantity" data-quantity aria-live="polite">1</output>
-                  <button class="quantity-button" type="button" data-action="increase" aria-label="Augmenter la quantité de Socks">+</button>
-                </div>
-                <div class="item-actions">
-                  <button class="icon-button like-button" type="button" data-action="like" aria-label="Ajouter Socks aux favoris" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
-                    <span>J’aime</span>
-                  </button>
-                  <button class="icon-button remove-button" type="button" data-action="remove" aria-label="Supprimer Socks du panier">
-                    <img src="assets/delete.png" alt="">
-                    <span>Supprimer</span>
-                  </button>
-                </div>
-                <p class="line-total" aria-label="Total pour Socks"><output data-line-total>20,00&nbsp;$</output></p>
-              </div>
-            </div>
-          </article>
-
-          <article class="card" data-price="50">
-            <div class="product-image product-image-bag">
-              <img src="assets/bag.png" alt="Sac à dos rose">
-            </div>
-            <div class="card-body">
-              <div class="product-details">
-                <div>
-                  <p class="product-category">Sacs</p>
-                  <h2>Bag</h2>
-                  <p class="product-description">Un sac pratique pour emporter vos essentiels.</p>
-                </div>
-                <p class="unit-price">50,00&nbsp;$</p>
-              </div>
-              <div class="product-actions">
-                <div class="quantity-control" aria-label="Quantité de Bag">
-                  <button class="quantity-button" type="button" data-action="decrease" aria-label="Diminuer la quantité de Bag" disabled>-</button>
-                  <output class="quantity" data-quantity aria-live="polite">1</output>
-                  <button class="quantity-button" type="button" data-action="increase" aria-label="Augmenter la quantité de Bag">+</button>
-                </div>
-                <div class="item-actions">
-                  <button class="icon-button like-button" type="button" data-action="like" aria-label="Ajouter Bag aux favoris" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
-                    <span>J’aime</span>
-                  </button>
-                  <button class="icon-button remove-button" type="button" data-action="remove" aria-label="Supprimer Bag du panier">
-                    <img src="assets/delete.png" alt="">
-                    <span>Supprimer</span>
-                  </button>
-                </div>
-                <p class="line-total" aria-label="Total pour Bag"><output data-line-total>50,00&nbsp;$</output></p>
-              </div>
-            </div>
-          </article>
-
-          <p class="empty-cart" data-empty-cart hidden>Votre panier est vide. Les articles supprimés ne sont plus comptabilisés.</p>
-        </div>
-
-        <aside class="order-summary" aria-labelledby="summary-title">
-          <h2 id="summary-title">Récapitulatif</h2>
-          <div class="summary-row">
-            <span>Sous-total</span>
-            <output data-subtotal aria-live="polite">170,00&nbsp;$</output>
-          </div>
-          <div class="summary-row">
-            <span>Livraison</span>
-            <span class="shipping-price">Offerte</span>
-          </div>
-          <div class="summary-divider"></div>
-          <div class="summary-row summary-total">
-            <span>Total</span>
-            <output data-total aria-live="polite">170,00&nbsp;$</output>
-          </div>
-          <p class="tax-note">Taxes incluses si applicables.</p>
-          <button class="checkout-button" type="button" data-checkout>Passer à la commande <span aria-hidden="true">→</span></button>
-          <p class="secure-note"><span aria-hidden="true">✓</span> Paiement sécurisé</p>
-        </aside>
-      </div>
-    </section>
+  <main class="container">
+    <h1>Color Changer</h1>
+    <p class="description">Cliquez sur le bouton pour découvrir une nouvelle couleur.</p>
+    <div id="color-box" role="status" aria-label="Couleur actuelle : corail"></div>
+    <p class="color-value" id="color-value" aria-live="polite">#E9785B</p>
+    <button id="change-color-btn" type="button">Change Color</button>
   </main>
-
-  <footer class="site-footer">© 2026 Everyday. Tous droits réservés.</footer>
 </body>
 </html>
