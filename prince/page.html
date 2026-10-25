@@ -3,17 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Changeur de couleurs</title>
+  <meta name="theme-color" content="#f5f6f2">
+  <title>Exercices de fonctions JavaScript</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
-  <main class="container">
-    <h1>Color Changer</h1>
-    <p class="description">Cliquez sur le bouton pour découvrir une nouvelle couleur.</p>
-    <div id="color-box" role="status" aria-label="Couleur actuelle : corail"></div>
-    <p class="color-value" id="color-value" aria-live="polite">#E9785B</p>
-    <button id="change-color-btn" type="button">Change Color</button>
+  <main class="page">
+    <header class="page-heading">
+      <p class="eyebrow">Atelier JavaScript</p>
+      <h1>Les fonctions en pratique</h1>
+      <p class="intro">Testez les fonctions de manipulation de texte, de tableaux et de nombres.</p>
+    </header>
+
+    <section class="exercise-grid" aria-label="Exercices JavaScript">
+      <article class="exercise-card">
+        <p class="card-number">01 · TEXTE</p>
+        <h2>Manipulation de chaînes</h2>
+        <label for="text-input">Votre phrase</label>
+        <input id="text-input" type="text" value="bonjour tout le monde" autocomplete="off">
+        <div class="button-list">
+          <button type="button" data-operation="reverse">Inverser la chaîne</button>
+          <button type="button" data-operation="count-characters">Compter les caractères</button>
+          <button type="button" data-operation="capitalize-words">Mettre les mots en majuscules</button>
+        </div>
+        <output class="result" data-result="text" aria-live="polite">Choisissez une opération.</output>
+      </article>
+
+      <article class="exercise-card">
+        <p class="card-number">02 · TABLEAUX</p>
+        <h2>Opérations sur les tableaux</h2>
+        <label for="array-input">Nombres séparés par des virgules</label>
+        <input id="array-input" type="text" value="4, 9, 2, 7" inputmode="decimal" autocomplete="off">
+        <div class="button-list">
+          <button type="button" data-operation="maximum">Trouver le maximum</button>
+          <button type="button" data-operation="minimum">Trouver le minimum</button>
+          <button type="button" data-operation="sum">Calculer la somme</button>
+          <button type="button" data-operation="filter">Filtrer les nombres pairs</button>
+        </div>
+        <output class="result" data-result="array" aria-live="polite">Choisissez une opération.</output>
+      </article>
+
+      <article class="exercise-card">
+        <p class="card-number">03 · MATHS</p>
+        <h2>Fonctions mathématiques</h2>
+        <label for="number-input">Entier positif ou nul</label>
+        <input id="number-input" type="number" value="5" min="0" step="1" inputmode="numeric">
+        <div class="button-list">
+          <button type="button" data-operation="factorial">Calculer la factorielle</button>
+          <button type="button" data-operation="prime">Vérifier si le nombre est premier</button>
+          <button type="button" data-operation="fibonacci">Générer la suite de Fibonacci</button>
+        </div>
+        <output class="result" data-result="math" aria-live="polite">Choisissez une opération.</output>
+      </article>
+    </section>
+    <p class="note">La factorielle et Fibonacci signalent une erreur si le résultat dépasse la précision exacte des nombres JavaScript.</p>
   </main>
 </body>
 </html>
