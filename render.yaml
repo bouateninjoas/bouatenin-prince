@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: pc-market
+    runtime: python
+    plan: free
+    rootDir: projet tech
+    buildCommand: pip install -r requirements.txt
+    startCommand: python server.py
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: PC_MARKET_ENV
+        value: production
+      - key: PC_MARKET_HOST
+        value: 0.0.0.0
+      - key: PC_MARKET_COOKIE_SECURE
+        value: "1"
+      - key: CINETPAY_API_KEY
+        sync: false
+      - key: CINETPAY_SITE_ID
+        sync: false

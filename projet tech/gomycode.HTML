@@ -1,0 +1,73 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4f3ef">
+    <meta name="description" content="Découvre des ordinateurs et accessoires avec leurs prix et caractéristiques détaillées.">
+    <title>PC Market — La tech, à ton rythme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="lenovo.css">
+</head>
+<body>
+    <div class="announcement">Livraison offerte dès 60 000 FCFA <span aria-hidden="true">·</span> Retours gratuits sous 30 jours</div>
+    <header class="site-header">
+        <a class="wordmark" href="#accueil" aria-label="PC Market, accueil"><span class="wordmark-box">PC</span><span>Market</span></a>
+        <nav class="main-nav" aria-label="Navigation principale">
+            <a href="#produits" data-nav-filter="ordinateur">Ordinateurs</a>
+            <a href="#produits" data-nav-filter="gaming">Gaming</a>
+            <a href="#produits" data-nav-filter="accessoires">Accessoires</a>
+        </nav>
+        <div class="header-actions">
+            <label class="search-box" aria-label="Rechercher un produit"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg><input id="search-input" type="search" placeholder="Chercher un produit" autocomplete="off"><kbd>/</kbd></label>
+            <button class="cart-trigger" id="cart-open" type="button" aria-label="Ouvrir le panier"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 1.9-1.5L21 8H6"></path><circle cx="10" cy="20" r="1"></circle><circle cx="18" cy="20" r="1"></circle></svg><span>Panier</span><b id="cart-count">0</b></button>
+            <div class="account-actions" id="account-actions" hidden><span id="account-phone"></span><button id="logout-button" type="button">Se déconnecter</button></div>
+        </div>
+    </header>
+    <main>
+        <section class="hero" id="accueil">
+            <div class="hero-copy">
+                <p class="eyebrow"><span class="eyebrow-dot"></span> La technologie qui te ressemble</p>
+                <h1>Prêt pour<br>la <span>suite.</span></h1>
+                <p class="hero-description">Pour créer, jouer ou simplement aller plus loin. Trouve l’ordinateur qui suit ton idée.</p>
+                <a class="button button-dark" href="#produits">Explorer la sélection <span aria-hidden="true">↗</span></a>
+                <div class="hero-note"><span class="note-mark">✳</span><span><strong>Conçu pour durer.</strong><br>Testé pour le quotidien.</span></div>
+            </div>
+            <div class="hero-visual" role="img" aria-label="Ordinateur portable ouvert sur un bureau lumineux"><div class="visual-label"><span>THINK · CREATE · PLAY</span><span>01 / 04</span></div><div class="visual-caption">Ta prochaine<br>bonne idée<br>commence ici.</div><span class="visual-sticker">MADE<br>FOR YOU</span></div>
+            <div class="hero-index" aria-hidden="true">01 <span></span> 04</div>
+        </section>
+        <section class="benefits" aria-label="Avantages boutique">
+            <div><span class="benefit-icon">↗</span><span><strong>Livraison offerte</strong><small>Dès 60 000 FCFA</small></span></div>
+            <div><span class="benefit-icon">↺</span><span><strong>Retours faciles</strong><small>30 jours pour changer d'avis</small></span></div>
+            <div><span class="benefit-icon">⌁</span><span><strong>Garantie incluse</strong><small>Une assistance qui t'accompagne</small></span></div>
+            <div><span class="benefit-icon">♡</span><span><strong>Paiement sécurisé</strong><small>En toute tranquillité</small></span></div>
+        </section>
+        <section class="catalog section-wrap" id="produits">
+            <div class="catalog-heading"><div><p class="eyebrow">La sélection PC Market</p><h2>Le bon outil.<br><span>Le bon moment.</span></h2></div><p class="catalog-intro">Découvre les ordinateurs et accessoires, avec leurs prix et caractéristiques.</p></div>
+            <div class="catalog-controls">
+                <div class="filter-list" role="group" aria-label="Filtrer les produits">
+                    <button class="filter-chip is-active" data-filter="all" type="button">Tout <span id="all-count">0</span></button>
+                    <button class="filter-chip" data-filter="ordinateur" type="button">Ordinateurs</button>
+                    <button class="filter-chip" data-filter="gaming" type="button">Gaming</button>
+                    <button class="filter-chip" data-filter="accessoires" type="button">Accessoires</button>
+                </div>
+                <label class="sort-control">Trier par<select id="sort-select" aria-label="Trier les produits"><option value="featured">À la une</option><option value="price-asc">Prix croissant</option><option value="price-desc">Prix décroissant</option><option value="name">Nom</option></select></label>
+            </div>
+            <p class="catalog-status" id="catalog-status" role="status">Chargement du catalogue…</p>
+            <div class="product-grid" id="product-grid" aria-live="polite"></div>
+            <p class="empty-state" id="empty-state" hidden>Aucun produit ne correspond à ta recherche. Essaie un autre mot-clé.</p>
+        </section>
+        <section class="closing-band"><span class="closing-symbol" aria-hidden="true">L.</span><p>Du premier clic<br>au <em>prochain chapitre.</em></p><a href="#produits">Découvrir la sélection <span aria-hidden="true">↗</span></a></section>
+    </main>
+    <footer class="site-footer"><a class="wordmark" href="#accueil" aria-label="PC Market, accueil"><span class="wordmark-box">PC</span><span>Market</span></a><p>Catalogue de démonstration. Prix en FCFA.</p><span>© 2026 PC Market</span></footer>
+    <dialog class="product-detail-dialog" id="product-detail-dialog" aria-labelledby="product-detail-title"></dialog>
+    <dialog class="cart-dialog" id="cart-dialog" aria-labelledby="cart-title">
+        <div class="cart-heading"><div><p class="eyebrow">Ta sélection</p><h2 id="cart-title">Mon panier <span id="dialog-cart-count">(0)</span></h2></div><button class="icon-button" id="cart-close" type="button" aria-label="Fermer le panier">×</button></div>
+        <div class="cart-items" id="cart-items"></div><div class="cart-empty" id="cart-empty">Ton panier est encore vide.</div>
+        <div class="cart-summary" id="cart-summary" hidden><div><span>Sous-total</span><strong id="cart-total">0 FCFA</strong></div><button class="button button-red" id="checkout-button" type="button">Payer en toute sécurité <span aria-hidden="true">→</span></button><p>Sur CinetPay, choisis Wave, Orange Money, Moov Money ou carte bancaire (Djamo si acceptée). Les options dépendent de ton compte marchand.</p></div>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="lenovo.js" defer></script>
+</body>
+</html>
