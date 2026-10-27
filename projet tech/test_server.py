@@ -1,4 +1,5 @@
 import http.client
+import io
 import json
 import tempfile
 import threading
@@ -64,23 +65,97 @@ class AuthenticationTests(unittest.TestCase):
             origin=self.origin,
         )
 
-    def test_authentication_is_classic_and_social_buttons_are_absent(self):
+    def test_sqlite_foreign_keys_cascade_when_user_is_deleted(self):
+        with server.database_connection() as connection:
+            cursor = connection.execute(
+                """
+                INSERT INTO users(phone, password_salt, password_hash, created_at)
+                VALUES (?, ?, ?, ?)
+                """,
+                ("+2250700000000", b"salt", b"hash", 0),
+            )
+            user_id = cursor.lastrowid
+            connection.execute(
+                "INSERT INTO sessions(token_hash, user_id, expires_at) VALUES (?, ?, ?)",
+                ("session-token", user_id, 1),
+            )
+            connection.execute(
+                """
+                INSERT INTO orders(
+                    transaction_id, user_id, amount, currency, status, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                """,
+                ("a" * 32, user_id, 10000, "XOF", "PENDING", 0, 0),
+            )
+            connection.execute(
+                """
+                INSERT INTO customer_orders(
+                    order_id, user_id, amount, currency, delivery_area, items_json, status, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                ("order-1", user_id, 10000, "XOF", "Cocody", "[]", "PENDING_CONFIRMATION", 0),
+            )
+            connection.execute(
+                """
+                INSERT INTO customer_order_messages(
+                    order_id, recipient_phone, opted_in_at, status, provider_message_id, error_message, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                """,
+                ("order-1", "+2250700000000", 0, "PENDING", None, None, 0),
+            )
+            connection.execute("DELETE FROM users WHERE id = ?", (user_id,))
+            session_count = connection.execute("SELECT COUNT(*) FROM sessions").fetchone()[0]
+            order_count = connection.execute("SELECT COUNT(*) FROM orders").fetchone()[0]
+            customer_order_count = connection.execute("SELECT COUNT(*) FROM customer_orders").fetchone()[0]
+            message_count = connection.execute("SELECT COUNT(*) FROM customer_order_messages").fetchone()[0]
+
+        self.assertEqual(session_count, 0)
+        self.assertEqual(order_count, 0)
+        self.assertEqual(customer_order_count, 0)
+        self.assertEqual(message_count, 0)
+
+    def test_visitors_can_browse_and_authentication_is_available_when_needed(self):
         status, headers, body = self.request("GET", "/")
         self.assertEqual(status, 200)
-        self.assertIn(b'id="auth-form"', body)
-        self.assertIn(b"Se connecter", body)
+        self.assertIn(b'id="product-grid"', body)
+        self.assertIn(b'id="login-link"', body)
+        self.assertIn(b'id="daily-news"', body)
+        self.assertIn(b'id="whatsapp-opt-in"', body)
+        self.assertIn(b"livreur te contactera", body)
         self.assertNotIn(b"Continuer avec Google", body)
         self.assertNotIn(b"Continuer avec Facebook", body)
         self.assertNotIn(b"Continuer avec GitHub", body)
         self.assertEqual(headers.get("X-Content-Type-Options"), "nosniff")
         self.assertIn("frame-ancestors 'none'", headers.get("Content-Security-Policy"))
 
+        status, _, body = self.request("GET", "/auth.html")
+        self.assertEqual(status, 200)
+        self.assertIn(b'id="auth-form"', body)
         status, _, body = self.request("GET", "/auth.js")
         self.assertEqual(status, 200)
         self.assertIn(b"/api/auth/", body)
-        status, headers, body = self.request("GET", "/lenovo.js")
-        self.assertEqual(status, 302)
-        self.assertEqual(headers.get("Location"), "/")
+        status, _, body = self.request("GET", "/gomycode.HTML")
+        self.assertEqual(status, 200)
+        self.assertIn(b'id="product-grid"', body)
+        status, _, body = self.request("GET", "/lenovo.js")
+        self.assertEqual(status, 200)
+        self.assertIn(b"function renderProducts", body)
+        self.assertIn(b"function showDailyNews", body)
+        status, _, _ = self.request("GET", "/lenovo.css")
+        self.assertEqual(status, 200)
+        for image_path in (
+            "/images/usb-c-hdmi-8-in-1.jpg",
+            "/images/usb-c-adapter-6-in-1.jpg",
+            "/images/aoa-b1001-wireless-mouse.jpg",
+            "/images/wireless-mouse-led.jpg",
+        ):
+            status, headers, body = self.request("GET", image_path)
+            self.assertEqual(status, 200)
+            self.assertEqual(headers.get("Content-Type"), "image/jpeg")
+            self.assertTrue(body.startswith(b"\xff\xd8"))
+        status, _, body = self.request("GET", "/api/auth/me")
+        self.assertEqual(status, 200)
+        self.assertFalse(json.loads(body)["authenticated"])
         for provider in ("google", "facebook", "github"):
             status, _, _ = self.request("GET", f"/auth/oauth/{provider}")
             self.assertEqual(status, 404)
@@ -130,7 +205,200 @@ class AuthenticationTests(unittest.TestCase):
         )
         self.assertEqual(status, 200)
         status, _, body = self.request("GET", "/", cookie=cookie)
-        self.assertIn(b'id="auth-form"', body)
+        self.assertIn(b'id="product-grid"', body)
+
+    def test_guest_can_browse_but_cannot_start_checkout(self):
+        status, _, body = self.request(
+            "POST",
+            "/api/payments/cinetpay",
+            {"items": [{"id": "toshiba-chromebook", "quantity": 1}]},
+            origin=self.origin,
+        )
+        self.assertEqual(status, 401)
+        self.assertIn("Connecte-toi", json.loads(body)["error"])
+
+    def test_authenticated_customer_can_create_delivery_order(self):
+        status, headers, _ = self.register()
+        self.assertEqual(status, 201)
+        cookie = self.session_cookie(headers)
+        with patch.object(server, "send_order_confirmation_whatsapp", return_value="wamid.order-test") as send_message:
+            status, _, body = self.request(
+                "POST",
+                "/api/orders",
+                {
+                    "items": [
+                        {"id": "toshiba-chromebook", "quantity": 2},
+                        {"id": "dell-ms116-mouse", "quantity": 1},
+                    ],
+                    "delivery_area": "Cocody, Angré",
+                    "whatsapp_opt_in": True,
+                },
+                origin=self.origin,
+                cookie=cookie,
+            )
+        send_message.assert_called_once_with("+2250712345678", json.loads(body)["order_id"], "Cocody, Angré")
+        self.assertEqual(status, 201)
+        result = json.loads(body)
+        self.assertRegex(result["order_id"], r"^[A-F0-9]{12}$")
+        self.assertEqual(result["amount"], 408000)
+        self.assertEqual(result["delivery_area"], "Cocody, Angré")
+        self.assertEqual(result["status"], "ACCEPTED_DELIVERY_24H")
+        self.assertEqual(result["whatsapp_notification"]["status"], "ACCEPTED_BY_PROVIDER")
+        self.assertEqual(
+            result["items"],
+            [
+                {"id": "toshiba-chromebook", "quantity": 2, "unit_price": 200000},
+                {"id": "dell-ms116-mouse", "quantity": 1, "unit_price": 8000},
+            ],
+        )
+        with server.database_connection() as connection:
+            order = connection.execute(
+                """
+                SELECT user_id, amount, delivery_area, items_json, status
+                FROM customer_orders WHERE order_id = ?
+                """,
+                (result["order_id"],),
+            ).fetchone()
+        self.assertGreater(order["user_id"], 0)
+        self.assertEqual(order["amount"], 408000)
+        self.assertEqual(order["delivery_area"], "Cocody, Angré")
+        self.assertEqual(json.loads(order["items_json"]), result["items"])
+        self.assertEqual(order["status"], "ACCEPTED_DELIVERY_24H")
+        with server.database_connection() as connection:
+            message = connection.execute(
+                "SELECT recipient_phone, opted_in_at, status, provider_message_id FROM customer_order_messages WHERE order_id = ?",
+                (result["order_id"],),
+            ).fetchone()
+        self.assertEqual(message["recipient_phone"], "+2250712345678")
+        self.assertGreater(message["opted_in_at"], 0)
+        self.assertEqual(message["status"], "ACCEPTED_BY_PROVIDER")
+        self.assertEqual(message["provider_message_id"], "wamid.order-test")
+
+    def test_customer_confirmation_uses_whatsapp_approved_template(self):
+        response = io.BytesIO(json.dumps({"messages": [{"id": "wamid.confirmation"}]}).encode())
+        with patch.dict(
+            server.os.environ,
+            {
+                "WHATSAPP_ACCESS_TOKEN": "test-access-token",
+                "WHATSAPP_PHONE_NUMBER_ID": "123456789",
+                "WHATSAPP_ORDER_TEMPLATE": "order_delivery_confirmation",
+                "WHATSAPP_TEMPLATE_LANGUAGE": "fr",
+                "WHATSAPP_GRAPH_API_VERSION": "v23.0",
+            },
+        ), patch.object(server, "urlopen") as send_request:
+            send_request.return_value.__enter__.return_value = response
+            message_id = server.send_order_confirmation_whatsapp(
+                "+2250712345678",
+                "A1B2C3D4E5F6",
+                "Cocody, Angré",
+            )
+
+        self.assertEqual(message_id, "wamid.confirmation")
+        request = send_request.call_args.args[0]
+        self.assertEqual(
+            request.full_url,
+            "https://graph.facebook.com/v23.0/123456789/messages",
+        )
+        self.assertEqual(request.get_header("Authorization"), "Bearer test-access-token")
+        payload = json.loads(request.data)
+        self.assertEqual(payload["messaging_product"], "whatsapp")
+        self.assertEqual(payload["to"], "2250712345678")
+        self.assertEqual(payload["type"], "template")
+        self.assertEqual(payload["template"]["name"], "order_delivery_confirmation")
+        self.assertEqual(
+            [parameter["text"] for parameter in payload["template"]["components"][0]["parameters"]],
+            ["A1B2C3D4E5F6", "Cocody, Angré"],
+        )
+
+    def test_unconfigured_whatsapp_keeps_order_pending_and_reports_failure(self):
+        _, headers, _ = self.register()
+        cookie = self.session_cookie(headers)
+        with patch.dict(
+            server.os.environ,
+            {
+                "WHATSAPP_ACCESS_TOKEN": "",
+                "WHATSAPP_PHONE_NUMBER_ID": "",
+            },
+        ):
+            status, _, body = self.request(
+                "POST",
+                "/api/orders",
+                {
+                    "items": [{"id": "toshiba-chromebook", "quantity": 1}],
+                    "delivery_area": "Cocody",
+                    "whatsapp_opt_in": True,
+                },
+                origin=self.origin,
+                cookie=cookie,
+            )
+
+        self.assertEqual(status, 201)
+        result = json.loads(body)
+        self.assertEqual(result["status"], "PENDING_CONFIRMATION")
+        self.assertEqual(result["whatsapp_notification"]["status"], "FAILED")
+        with server.database_connection() as connection:
+            order = connection.execute(
+                "SELECT status FROM customer_orders WHERE order_id = ?",
+                (result["order_id"],),
+            ).fetchone()
+            message = connection.execute(
+                "SELECT status, error_message FROM customer_order_messages WHERE order_id = ?",
+                (result["order_id"],),
+            ).fetchone()
+        self.assertEqual(order["status"], "PENDING_CONFIRMATION")
+        self.assertEqual(message["status"], "FAILED")
+        self.assertIn("pas configurée", message["error_message"])
+
+    def test_customer_order_requires_login_and_valid_delivery_area(self):
+        payload = {
+            "items": [{"id": "toshiba-chromebook", "quantity": 1}],
+            "delivery_area": "Cocody",
+            "whatsapp_opt_in": True,
+        }
+        status, _, body = self.request("POST", "/api/orders", payload, origin=self.origin)
+        self.assertEqual(status, 401)
+        self.assertIn("Connecte-toi", json.loads(body)["error"])
+
+        _, headers, _ = self.register()
+        cookie = self.session_cookie(headers)
+        status, _, body = self.request(
+            "POST",
+            "/api/orders",
+            {**payload, "whatsapp_opt_in": False},
+            origin=self.origin,
+            cookie=cookie,
+        )
+        self.assertEqual(status, 400)
+        self.assertIn("WhatsApp", json.loads(body)["error"])
+        status, _, body = self.request(
+            "POST",
+            "/api/orders",
+            {**payload, "delivery_area": " "},
+            origin=self.origin,
+            cookie=cookie,
+        )
+        self.assertEqual(status, 400)
+        self.assertIn("commune", json.loads(body)["error"])
+        with server.database_connection() as connection:
+            count = connection.execute("SELECT COUNT(*) FROM customer_orders").fetchone()[0]
+        self.assertEqual(count, 0)
+
+    def test_customer_order_rejects_cross_origin_request(self):
+        _, headers, _ = self.register()
+        cookie = self.session_cookie(headers)
+        status, _, body = self.request(
+            "POST",
+            "/api/orders",
+            {
+                "items": [{"id": "toshiba-chromebook", "quantity": 1}],
+                "delivery_area": "Cocody",
+                "whatsapp_opt_in": True,
+            },
+            origin="https://attacker.example",
+            cookie=cookie,
+        )
+        self.assertEqual(status, 403)
+        self.assertIn("Origine", json.loads(body)["error"])
 
     def test_checkout_uses_server_prices_and_verifies_payment(self):
         with patch.dict(
@@ -241,13 +509,17 @@ class AuthenticationTests(unittest.TestCase):
                             {"id": "dell-latitude-7200-2-in-1", "quantity": 1},
                             {"id": "dell-ms116-mouse", "quantity": 1},
                             {"id": "lenovo-300-usb-mouse", "quantity": 1},
+                            {"id": "aoa-b1001-wireless-mouse", "quantity": 1},
+                            {"id": "wireless-mouse-led", "quantity": 1},
+                            {"id": "usb-c-hdmi-8-in-1", "quantity": 1},
+                            {"id": "usb-c-adapter-6-in-1", "quantity": 1},
                         ]
                     },
                     origin=self.origin,
                     cookie=cookie,
                 )
             self.assertEqual(status, 201)
-            self.assertEqual(provider_request.call_args.args[1]["amount"], 1220000)
+            self.assertEqual(provider_request.call_args.args[1]["amount"], 1252000)
 
     def test_checkout_rejects_cross_origin_request(self):
         with patch.dict(

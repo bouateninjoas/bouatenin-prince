@@ -50,6 +50,7 @@ form.addEventListener('submit', async (event) => {
   submitButton.disabled = true;
   submitButton.setAttribute('aria-busy', 'true');
   submitLabel.textContent = mode === 'register' ? 'Création du compte…' : 'Connexion…';
+  let redirecting = false;
   try {
     const response = await fetch(`/api/auth/${mode}`, {
       method: 'POST',
@@ -64,13 +65,17 @@ form.addEventListener('submit', async (event) => {
     message.classList.add('is-success');
     message.textContent = mode === 'register'
       ? 'Compte créé. Ouverture de la boutique…'
-      : 'Connexion réussie. Ouverture de la boutique…';
-    window.location.assign('/gomycode.HTML');
+      : 'Connexion réussie ! Bienvenue dans ton espace.';
+    submitLabel.textContent = mode === 'register' ? 'Compte créé !' : 'Connexion réussie !';
+    redirecting = true;
+    window.setTimeout(() => window.location.assign('/gomycode.HTML'), 1500);
   } catch {
     message.textContent = 'Le serveur est injoignable. Réessaie dans un instant.';
   } finally {
-    submitButton.disabled = false;
-    submitButton.removeAttribute('aria-busy');
-    submitLabel.textContent = mode === 'register' ? 'Créer mon compte' : 'Se connecter';
+    if (!redirecting) {
+      submitButton.disabled = false;
+      submitButton.removeAttribute('aria-busy');
+      submitLabel.textContent = mode === 'register' ? 'Créer mon compte' : 'Se connecter';
+    }
   }
 });

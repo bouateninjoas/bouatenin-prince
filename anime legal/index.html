@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090a13">
+  <meta name="description" content="Trouve où regarder des anime légalement. Découvre des plateformes officielles et leurs offres selon ton pays.">
+  <title>Yume — Anime, en toute légalité</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="announcement"><span class="live-dot" aria-hidden="true"></span> LE GUIDE POUR REGARDER EN TOUTE LÉGALITÉ</div>
+  <header class="site-header">
+    <a class="brand" href="#accueil" aria-label="Yume, accueil"><span class="brand-mark" aria-hidden="true">夢</span><span>yu<span class="brand-accent">me</span><small>ANIME, OFFICIELLEMENT</small></span></a>
+    <nav aria-label="Navigation principale">
+      <a href="#plateformes">Plateformes</a>
+      <a href="#gratuit">Options gratuites</a>
+      <a href="#guide">Le guide</a>
+    </nav>
+    <a class="header-link" href="#plateformes">Explorer <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero" id="accueil">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> TON PROCHAIN ANIME T'ATTEND</p>
+        <h1>Les anime.<br><span>Du bon côté</span><br>de l’écran.</h1>
+        <p class="hero-description">Retrouve les plateformes qui diffusent des anime légalement. Choisis où regarder, et soutiens les personnes qui les créent.</p>
+        <a class="button button-primary" href="#plateformes">Trouver une plateforme <span aria-hidden="true">↓</span></a>
+        <p class="hero-note"><span aria-hidden="true">✓</span> Liens vers les services officiels uniquement</p>
+      </div>
+      <div class="hero-art" aria-label="Illustration originale de lune et de ciel nocturne" role="img">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="moon"></div>
+        <span class="star star-one">✦</span><span class="star star-two">✧</span><span class="star star-three">✦</span>
+        <div class="art-caption"><span>NUIT DE PREMIÈRE</span><strong>Des histoires<br>à découvrir.</strong><span>À TOI DE CHOISIR OÙ</span></div>
+        <div class="art-index">01 <i></i> 04</div>
+      </div>
+    </section>
+
+    <section class="trust-strip" aria-label="Informations du guide">
+      <div><span class="trust-icon">01</span><span><strong>Plateformes officielles</strong><small>Pas de streaming pirate</small></span></div>
+      <div><span class="trust-icon">02</span><span><strong>Gratuit ou abonnement</strong><small>Compare les options</small></span></div>
+      <div><span class="trust-icon">03</span><span><strong>Tu gardes le choix</strong><small>Lecture chez la plateforme</small></span></div>
+    </section>
+
+    <section class="platform-section section-shell" id="plateformes">
+      <div class="section-heading">
+        <div><p class="eyebrow"><span></span> CATALOGUES OFFICIELS</p><h2>Où regarder<br><span>en toute confiance.</span></h2></div>
+        <p>Choisis un service et explore son catalogue officiel. Les offres et les titres disponibles dépendent de ton pays.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filtrer les plateformes">
+        <button class="filter is-active" type="button" data-filter="all">Tout voir</button>
+        <button class="filter" type="button" data-filter="subscription">Abonnement</button>
+        <button class="filter" type="button" data-filter="free">Options gratuites</button>
+      </div>
+      <div class="platform-grid" id="platform-grid">
+        <article class="platform-card feature-card" data-type="subscription">
+          <div class="platform-top"><span class="platform-logo crunchy">cr</span><span class="platform-kind">ANIME EN STREAMING</span></div>
+          <h3>Crunchyroll</h3>
+          <p>Une plateforme dédiée à l’animation japonaise. Consulte son offre et son catalogue dans ta région.</p>
+          <div class="card-footer"><span class="availability"><i></i> Catalogue selon le pays</span><a href="https://www.crunchyroll.com/" target="_blank" rel="noopener noreferrer">Visiter le site officiel <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="platform-card" data-type="subscription">
+          <div class="platform-top"><span class="platform-logo adn">ADN</span><span class="platform-kind">ANIME &amp; DESSINS ANIMÉS</span></div>
+          <h3>Animation Digital Network</h3>
+          <p>Explore le catalogue et vérifie les conditions de visionnage proposées par le service.</p>
+          <div class="card-footer"><span class="availability"><i></i> Disponibilité à vérifier</span><a href="https://animationdigitalnetwork.fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="platform-card" data-type="subscription">
+          <div class="platform-top"><span class="platform-logo netflix">N</span><span class="platform-kind">SÉRIES &amp; FILMS</span></div>
+          <h3>Netflix</h3>
+          <p>Retrouve les anime présents dans le catalogue local de la plateforme.</p>
+          <div class="card-footer"><span class="availability"><i></i> Abonnement requis</span><a href="https://www.netflix.com/browse/genre/7424" target="_blank" rel="noopener noreferrer">Explorer les anime <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="platform-card free-card" data-type="free" id="gratuit">
+          <div class="platform-top"><span class="platform-logo youtube">▶</span><span class="platform-kind">VIDÉOS PUBLIÉES OFFICIELLEMENT</span></div>
+          <h3>YouTube — chaînes officielles</h3>
+          <p>Certains studios et distributeurs publient des épisodes ou des films gratuitement. Vérifie que la chaîne appartient au détenteur des droits.</p>
+          <div class="card-footer"><span class="availability"><i></i> Gratuit, selon les chaînes</span><a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">Aller sur YouTube <span aria-hidden="true">↗</span></a></div>
+        </article>
+      </div>
+      <p class="results-message" id="results-message" aria-live="polite"></p>
+    </section>
+
+    <section class="legal-note section-shell" id="guide">
+      <span class="legal-symbol" aria-hidden="true">✓</span>
+      <div><p class="eyebrow">LE BON RÉFLEXE</p><h2>Regarde l’anime.<br><span>Respecte celles et ceux qui le font.</span></h2>
+        <p>Yume est un guide indépendant, pas un service de streaming. Les boutons ouvrent les sites officiels ; aucune vidéo n’est hébergée ici. Avant de t’abonner, vérifie les tarifs, les conditions et la disponibilité dans ton pays. Sur YouTube, privilégie les chaînes officielles des studios et des distributeurs.</p>
+      </div>
+      <a href="#plateformes">Choisir où regarder <span aria-hidden="true">↑</span></a>
+    </section>
+  </main>
+
+  <footer class="site-footer"><a class="brand" href="#accueil"><span class="brand-mark" aria-hidden="true">夢</span><span>yume<small>ANIME, OFFICIELLEMENT</small></span></a><p>Guide indépendant. Vérifie toujours les droits et disponibilités auprès du service.</p><span>© 2026 Yume</span></footer>
+</body>
+</html>

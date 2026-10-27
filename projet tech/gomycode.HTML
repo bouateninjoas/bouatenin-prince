@@ -2,18 +2,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f4f3ef">
+    <meta name="theme-color" content="#080b14">
+
     <meta name="description" content="Découvre des ordinateurs et accessoires avec leurs prix et caractéristiques détaillées.">
-    <title>PC Market — La tech, à ton rythme</title>
+    <title>Néoluxia — L’avenir s’invente ici</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="lenovo.css">
 </head>
 <body>
-    <div class="announcement">Livraison offerte dès 60 000 FCFA <span aria-hidden="true">·</span> Retours gratuits sous 30 jours</div>
+    <div class="announcement">Livraison a 2000 fcfa <span aria-hidden="true">·</span> Retours gratuits sous 30 jours</div>
     <header class="site-header">
-        <a class="wordmark" href="#accueil" aria-label="PC Market, accueil"><span class="wordmark-box">PC</span><span>Market</span></a>
+        <a class="wordmark" href="#accueil" aria-label="Néoluxia, accueil"><span class="wordmark-box" aria-hidden="true"><svg viewBox="0 0 32 32" focusable="false"><path d="M7 24V8l18 16V8M4 28h24M4 4h24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="round"/></svg></span><span>Néoluxia</span></a>
         <nav class="main-nav" aria-label="Navigation principale">
             <a href="#produits" data-nav-filter="ordinateur">Ordinateurs</a>
             <a href="#produits" data-nav-filter="gaming">Gaming</a>
@@ -22,6 +23,7 @@
         <div class="header-actions">
             <label class="search-box" aria-label="Rechercher un produit"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg><input id="search-input" type="search" placeholder="Chercher un produit" autocomplete="off"><kbd>/</kbd></label>
             <button class="cart-trigger" id="cart-open" type="button" aria-label="Ouvrir le panier"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 1.9-1.5L21 8H6"></path><circle cx="10" cy="20" r="1"></circle><circle cx="18" cy="20" r="1"></circle></svg><span>Panier</span><b id="cart-count">0</b></button>
+            <a class="account-login" id="login-link" href="/auth.html">Se connecter</a>
             <div class="account-actions" id="account-actions" hidden><span id="account-phone"></span><button id="logout-button" type="button">Se déconnecter</button></div>
         </div>
     </header>
@@ -37,8 +39,14 @@
             <div class="hero-visual" role="img" aria-label="Ordinateur portable ouvert sur un bureau lumineux"><div class="visual-label"><span>THINK · CREATE · PLAY</span><span>01 / 04</span></div><div class="visual-caption">Ta prochaine<br>bonne idée<br>commence ici.</div><span class="visual-sticker">MADE<br>FOR YOU</span></div>
             <div class="hero-index" aria-hidden="true">01 <span></span> 04</div>
         </section>
+        <aside class="daily-news section-wrap" id="daily-news" aria-labelledby="daily-news-title" aria-live="polite" hidden>
+            <span class="daily-news-mark" aria-hidden="true">✦</span>
+            <div class="daily-news-copy"><p class="eyebrow">À DÉCOUVRIR AUJOURD’HUI</p><h2 id="daily-news-title"></h2><p id="daily-news-description"></p></div>
+            <button class="daily-news-link" id="daily-news-link" type="button">Voir la sélection <span aria-hidden="true">↘</span></button>
+            <button class="daily-news-close" id="daily-news-close" type="button" aria-label="Masquer le message du jour">×</button>
+        </aside>
         <section class="benefits" aria-label="Avantages boutique">
-            <div><span class="benefit-icon">↗</span><span><strong>Livraison offerte</strong><small>Dès 60 000 FCFA</small></span></div>
+            <div><span class="benefit-icon">↗</span><span><strong>Livraison offerte</strong><small>Dès 2000 FCFA</small></span></div>
             <div><span class="benefit-icon">↺</span><span><strong>Retours faciles</strong><small>30 jours pour changer d'avis</small></span></div>
             <div><span class="benefit-icon">⌁</span><span><strong>Garantie incluse</strong><small>Une assistance qui t'accompagne</small></span></div>
             <div><span class="benefit-icon">♡</span><span><strong>Paiement sécurisé</strong><small>En toute tranquillité</small></span></div>
@@ -60,12 +68,23 @@
         </section>
         <section class="closing-band"><span class="closing-symbol" aria-hidden="true">L.</span><p>Du premier clic<br>au <em>prochain chapitre.</em></p><a href="#produits">Découvrir la sélection <span aria-hidden="true">↗</span></a></section>
     </main>
-    <footer class="site-footer"><a class="wordmark" href="#accueil" aria-label="PC Market, accueil"><span class="wordmark-box">PC</span><span>Market</span></a><p>Catalogue de démonstration. Prix en FCFA.</p><span>© 2026 PC Market</span></footer>
+    <footer class="site-footer"><a class="wordmark" href="#accueil" aria-label="Néoluxia, accueil"><span class="wordmark-box" aria-hidden="true"><svg viewBox="0 0 32 32" focusable="false"><path d="M7 24V8l18 16V8M4 28h24M4 4h24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="round"/></svg></span><span>Néoluxia</span></a><p>Catalogue de démonstration. Prix en FCFA.</p><a class="store-contact" href="https://wa.me/2250757589892" target="_blank" rel="noopener noreferrer">Commander par WhatsApp · 07 57 58 98 92 <span aria-hidden="true">↗</span></a><span>© 2026 Néoluxia</span></footer>
     <dialog class="product-detail-dialog" id="product-detail-dialog" aria-labelledby="product-detail-title"></dialog>
     <dialog class="cart-dialog" id="cart-dialog" aria-labelledby="cart-title">
         <div class="cart-heading"><div><p class="eyebrow">Ta sélection</p><h2 id="cart-title">Mon panier <span id="dialog-cart-count">(0)</span></h2></div><button class="icon-button" id="cart-close" type="button" aria-label="Fermer le panier">×</button></div>
         <div class="cart-items" id="cart-items"></div><div class="cart-empty" id="cart-empty">Ton panier est encore vide.</div>
-        <div class="cart-summary" id="cart-summary" hidden><div><span>Sous-total</span><strong id="cart-total">0 FCFA</strong></div><button class="button button-red" id="checkout-button" type="button">Payer en toute sécurité <span aria-hidden="true">→</span></button><p>Sur CinetPay, choisis Wave, Orange Money, Moov Money ou carte bancaire (Djamo si acceptée). Les options dépendent de ton compte marchand.</p></div>
+        <div class="cart-summary" id="cart-summary" hidden><div><span>Sous-total</span><strong id="cart-total">0 FCFA</strong></div><button class="button button-red" id="checkout-button" type="button">Commander par WhatsApp <span aria-hidden="true">→</span></button><p>Connecte-toi pour commander. Paiement à la livraison ; frais et lieu de livraison à confirmer avec le vendeur.</p></div>
+    </dialog>
+    <dialog class="order-dialog" id="order-dialog" aria-labelledby="order-title">
+        <form id="order-form">
+            <div class="cart-heading"><div><p class="eyebrow">Livraison &amp; confirmation</p><h2 id="order-title">Finaliser la commande</h2></div><button class="icon-button" id="order-close" type="button" aria-label="Fermer le formulaire de commande">×</button></div>
+            <label class="order-field" for="delivery-area">COMMUNE OU QUARTIER</label>
+            <input class="order-input" id="delivery-area" name="delivery-area" type="text" maxlength="120" autocomplete="address-level2" placeholder="Ex. Cocody, Angré" required>
+            <label class="order-consent"><input id="whatsapp-opt-in" name="whatsapp-opt-in" type="checkbox" required><span>J’accepte de recevoir sur WhatsApp la confirmation et les informations de livraison de cette commande au numéro de mon compte.</span></label>
+            <p class="order-help">Si WhatsApp accepte la confirmation, la commande est prise en charge : livraison prévue dans les 24 h suivant la commande. Le livreur te contactera avant de venir. Paiement à la livraison.</p>
+            <p class="order-status" id="order-status" role="status" aria-live="polite"></p>
+            <button class="button button-red order-submit" id="order-submit" type="submit">Confirmer la commande <span aria-hidden="true">↗</span></button>
+        </form>
     </dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="lenovo.js" defer></script>

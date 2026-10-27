@@ -46,8 +46,12 @@ PAYMENT_PRODUCTS = {
     "dell-latitude-5420": 200000,
     "dell-optiplex-micro": 200000,
     "hp-prodesk-mini": 200000,
-    "dell-ms116-mouse": 10000,
-    "lenovo-300-usb-mouse": 10000,
+    "dell-ms116-mouse": 8000,
+    "lenovo-300-usb-mouse": 8000,
+    "aoa-b1001-wireless-mouse": 8000,
+    "wireless-mouse-led": 8000,
+    "usb-c-hdmi-8-in-1": 10000,
+    "usb-c-adapter-6-in-1": 10000,
     "hp-pavilion-15": 200000,
     "asus-vivobook-15": 200000,
     "acer-aspire-5": 200000,
@@ -63,6 +67,77 @@ PAYMENT_PRODUCTS = {
 
 class PaymentProviderError(Exception):
     pass
+
+
+class WhatsAppProviderError(Exception):
+    pass
+
+
+def send_order_confirmation_whatsapp(phone, order_id, delivery_area):
+    access_token = os.environ.get("WHATSAPP_ACCESS_TOKEN", "").strip()
+    phone_number_id = os.environ.get("WHATSAPP_PHONE_NUMBER_ID", "").strip()
+    template_name = os.environ.get("WHATSAPP_ORDER_TEMPLATE", "order_delivery_confirmation").strip()
+    template_language = os.environ.get("WHATSAPP_TEMPLATE_LANGUAGE", "fr").strip()
+    api_version = os.environ.get("WHATSAPP_GRAPH_API_VERSION", "v23.0").strip()
+    if not access_token or not phone_number_id:
+        raise WhatsAppProviderError("La messagerie WhatsApp Business n’est pas configurée.")
+    if (
+        not re.fullmatch(r"[A-Za-z0-9_-]{1,512}", phone_number_id)
+        or not re.fullmatch(r"[a-z0-9_]{1,512}", template_name)
+        or not re.fullmatch(r"[a-z]{2,3}(?:_[A-Z]{2})?", template_language)
+        or not re.fullmatch(r"v[0-9]{1,3}\.[0-9]{1,2}", api_version)
+    ):
+        raise WhatsAppProviderError("La configuration WhatsApp Business est invalide.")
+
+    recipient = phone.lstrip("+")
+    if not recipient.isdecimal() or not 8 <= len(recipient) <= 15:
+        raise WhatsAppProviderError("Le numéro du client doit être au format international.")
+
+    request_payload = {
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": recipient,
+        "type": "template",
+        "template": {
+            "name": template_name,
+            "language": {"code": template_language},
+            "components": [
+                {
+                    "type": "body",
+                    "parameters": [
+                        {"type": "text", "text": order_id},
+                        {"type": "text", "text": delivery_area},
+                    ],
+                }
+            ],
+        },
+    }
+    request = Request(
+        f"https://graph.facebook.com/{api_version}/{phone_number_id}/messages",
+        data=json.dumps(request_payload).encode("utf-8"),
+        headers={
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with urlopen(request, timeout=10) as response:
+            result = json.loads(response.read())
+    except HTTPError as error:
+        error.close()
+        raise WhatsAppProviderError("WhatsApp Business a refusé l’envoi du message.") from None
+    except (URLError, TimeoutError, OSError) as error:
+        raise WhatsAppProviderError("WhatsApp Business est momentanément injoignable.") from error
+    except (json.JSONDecodeError, UnicodeDecodeError) as error:
+        raise WhatsAppProviderError("La réponse de WhatsApp Business est invalide.") from error
+    if not isinstance(result, dict):
+        raise WhatsAppProviderError("La réponse de WhatsApp Business est invalide.")
+    messages = result.get("messages")
+    message_id = messages[0].get("id") if isinstance(messages, list) and messages and isinstance(messages[0], dict) else None
+    if not isinstance(message_id, str) or not message_id:
+        raise WhatsAppProviderError("WhatsApp Business n’a pas confirmé la prise en charge du message.")
+    return message_id
 
 
 @contextmanager
@@ -85,6 +160,7 @@ def database_connection():
     DATABASE_PATH.parent.mkdir(parents=True, exist_ok=True)
     connection = sqlite3.connect(DATABASE_PATH, timeout=10)
     connection.row_factory = sqlite3.Row
+    connection.execute("PRAGMA foreign_keys = ON")
     try:
         with connection:
             yield connection
@@ -154,6 +230,30 @@ def initialize_database():
                 )
                 """,
                 "CREATE INDEX IF NOT EXISTS orders_user_idx ON orders(user_id, created_at)",
+                """
+                CREATE TABLE IF NOT EXISTS customer_orders (
+                    order_id TEXT PRIMARY KEY,
+                    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                    amount BIGINT NOT NULL,
+                    currency TEXT NOT NULL,
+                    delivery_area TEXT NOT NULL,
+                    items_json TEXT NOT NULL,
+                    status TEXT NOT NULL,
+                    created_at BIGINT NOT NULL
+                )
+                """,
+                "CREATE INDEX IF NOT EXISTS customer_orders_user_idx ON customer_orders(user_id, created_at)",
+                """
+                CREATE TABLE IF NOT EXISTS customer_order_messages (
+                    order_id TEXT PRIMARY KEY REFERENCES customer_orders(order_id) ON DELETE CASCADE,
+                    recipient_phone TEXT NOT NULL,
+                    opted_in_at BIGINT NOT NULL,
+                    status TEXT NOT NULL,
+                    provider_message_id TEXT,
+                    error_message TEXT,
+                    updated_at BIGINT NOT NULL
+                )
+                """,
             ):
                 connection.execute(statement)
         return
@@ -193,6 +293,26 @@ def initialize_database():
                 updated_at INTEGER NOT NULL
             );
             CREATE INDEX IF NOT EXISTS orders_user_idx ON orders(user_id, created_at);
+            CREATE TABLE IF NOT EXISTS customer_orders (
+                order_id TEXT PRIMARY KEY,
+                user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                amount INTEGER NOT NULL,
+                currency TEXT NOT NULL,
+                delivery_area TEXT NOT NULL,
+                items_json TEXT NOT NULL,
+                status TEXT NOT NULL,
+                created_at INTEGER NOT NULL
+            );
+            CREATE INDEX IF NOT EXISTS customer_orders_user_idx ON customer_orders(user_id, created_at);
+            CREATE TABLE IF NOT EXISTS customer_order_messages (
+                order_id TEXT PRIMARY KEY REFERENCES customer_orders(order_id) ON DELETE CASCADE,
+                recipient_phone TEXT NOT NULL,
+                opted_in_at INTEGER NOT NULL,
+                status TEXT NOT NULL,
+                provider_message_id TEXT,
+                error_message TEXT,
+                updated_at INTEGER NOT NULL
+            );
             """
         )
 
@@ -222,6 +342,46 @@ def password_digest(password, salt):
 
 def token_digest(token):
     return hashlib.sha256(token.encode("ascii")).hexdigest()
+
+
+def validate_order_items(items):
+    if not isinstance(items, list) or not 1 <= len(items) <= 20:
+        raise ValueError("Le panier est vide ou invalide.")
+
+    validated_items = []
+    total = 0
+    for item in items:
+        if not isinstance(item, dict):
+            raise ValueError("Un article du panier est invalide.")
+        product_id = item.get("id")
+        quantity = item.get("quantity")
+        if (
+            not isinstance(product_id, str)
+            or not isinstance(quantity, int)
+            or isinstance(quantity, bool)
+            or not 1 <= quantity <= 10
+        ):
+            raise ValueError("Un article du panier est invalide.")
+        price = PAYMENT_PRODUCTS.get(product_id)
+        if price is None and re.fullmatch(r"api-[1-9][0-9]{0,8}", product_id):
+            price = 200000
+        if price is None:
+            raise ValueError("Un article du panier n’est pas disponible.")
+        validated_items.append({"id": product_id, "quantity": quantity, "unit_price": price})
+        total += price * quantity
+
+    if total <= 0 or total > 50000000:
+        raise ValueError("Le montant du panier est invalide.")
+    return validated_items, total
+
+
+def normalize_delivery_area(value):
+    if not isinstance(value, str):
+        raise ValueError("Indique ta commune ou ton quartier.")
+    value = value.strip()
+    if not 2 <= len(value) <= 120 or any(ord(character) < 32 for character in value):
+        raise ValueError("La commune ou le quartier doit contenir entre 2 et 120 caractères.")
+    return value
 
 
 def configured_public_origin():
@@ -422,10 +582,7 @@ class PCMarketHandler(BaseHTTPRequestHandler):
         path = self._path()
         user, _ = self._session()
         if path == "/":
-            if user is None:
-                self._send(200, (BASE_DIR / "auth.html").read_bytes(), "text/html; charset=utf-8")
-            else:
-                self._serve_shop()
+            self._serve_shop()
             return
         if path == "/auth.html":
             if user is not None:
@@ -434,10 +591,7 @@ class PCMarketHandler(BaseHTTPRequestHandler):
                 self._send(200, (BASE_DIR / "auth.html").read_bytes(), "text/html; charset=utf-8")
             return
         if path == "/gomycode.HTML":
-            if user is None:
-                self._send(302, b"", headers={"Location": "/"})
-            else:
-                self._serve_shop()
+            self._serve_shop()
             return
         if path == "/payment/return":
             if user is None:
@@ -447,7 +601,7 @@ class PCMarketHandler(BaseHTTPRequestHandler):
             return
         if path == "/api/auth/me":
             if user is None:
-                self._json(401, {"authenticated": False})
+                self._json(200, {"authenticated": False})
             else:
                 self._json(200, {"authenticated": True, "user": {"phone": user["phone"]}})
             return
@@ -460,14 +614,14 @@ class PCMarketHandler(BaseHTTPRequestHandler):
             "/images/soyo-m5-air.jpg": ("images/soyo-m5-air.jpg", "image/jpeg"),
             "/images/surface-laptop-4.jpg": ("images/surface-laptop-4.jpg", "image/jpeg"),
             "/images/dell-latitude-7200-2-in-1.jpg": ("images/dell-latitude-7200-2-in-1.jpg", "image/jpeg"),
+            "/images/usb-c-hdmi-8-in-1.jpg": ("images/usb-c-hdmi-8-in-1.jpg", "image/jpeg"),
+            "/images/usb-c-adapter-6-in-1.jpg": ("images/usb-c-adapter-6-in-1.jpg", "image/jpeg"),
+            "/images/aoa-b1001-wireless-mouse.jpg": ("images/aoa-b1001-wireless-mouse.jpg", "image/jpeg"),
+            "/images/wireless-mouse-led.jpg": ("images/wireless-mouse-led.jpg", "image/jpeg"),
         }
         asset = assets.get(path)
         if asset is not None:
             filename, media_type = asset
-            if path.startswith("/lenovo") or path.startswith("/images/"):
-                if user is None:
-                    self._send(302, b"", headers={"Location": "/"})
-                    return
             self._send(200, (BASE_DIR / filename).read_bytes(), media_type)
             return
         self._error(404, "Page introuvable.")
@@ -553,6 +707,19 @@ class PCMarketHandler(BaseHTTPRequestHandler):
                 return
             self._json(200, {"ok": True}, cookie=self._create_session(account["id"]))
             return
+        if path == "/api/orders":
+            if not self._valid_origin():
+                self._error(403, "Origine de la requête refusée.")
+                return
+            user, _ = self._session()
+            if user is None:
+                self._error(401, "Connecte-toi pour passer une commande.")
+                return
+            payload = self._request_json()
+            if payload is None:
+                return
+            self._create_customer_order(payload, user)
+            return
         if path == "/api/payments/cinetpay/notify":
             self._handle_cinetpay_notification()
             return
@@ -589,6 +756,86 @@ class PCMarketHandler(BaseHTTPRequestHandler):
             return
 
         self._create_cinetpay_checkout(payload, user)
+
+    def _create_customer_order(self, payload, user):
+        try:
+            items, total = validate_order_items(payload.get("items"))
+            delivery_area = normalize_delivery_area(payload.get("delivery_area"))
+        except ValueError as error:
+            self._error(400, str(error))
+            return
+        if payload.get("whatsapp_opt_in") is not True:
+            self._error(400, "Accepte la réception du suivi de commande sur WhatsApp.")
+            return
+
+        order_id = secrets.token_hex(6).upper()
+        created_at = int(time.time())
+        with database_connection() as connection:
+            connection.execute(
+                """
+                INSERT INTO customer_orders(
+                    order_id, user_id, amount, currency, delivery_area, items_json, status, created_at
+                ) VALUES (?, ?, ?, 'XOF', ?, ?, 'PENDING_CONFIRMATION', ?)
+                """,
+                (order_id, user["id"], total, delivery_area, json.dumps(items), created_at),
+            )
+            connection.execute(
+                """
+                INSERT INTO customer_order_messages(
+                    order_id, recipient_phone, opted_in_at, status, provider_message_id, error_message, updated_at
+                ) VALUES (?, ?, ?, 'PENDING', NULL, NULL, ?)
+                """,
+                (order_id, user["phone"], created_at, created_at),
+            )
+
+        notification_status = "FAILED"
+        notification_error = None
+        try:
+            message_id = send_order_confirmation_whatsapp(user["phone"], order_id, delivery_area)
+        except WhatsAppProviderError as error:
+            notification_error = str(error)
+            print(f"WhatsApp confirmation failed for order {order_id}: {notification_error}")
+            with database_connection() as connection:
+                connection.execute(
+                    """
+                    UPDATE customer_order_messages
+                    SET status = 'FAILED', error_message = ?, updated_at = ?
+                    WHERE order_id = ?
+                    """,
+                    (notification_error, int(time.time()), order_id),
+                )
+        else:
+            notification_status = "ACCEPTED_BY_PROVIDER"
+            sent_at = int(time.time())
+            with database_connection() as connection:
+                connection.execute(
+                    """
+                    UPDATE customer_order_messages
+                    SET status = 'ACCEPTED_BY_PROVIDER', provider_message_id = ?, error_message = NULL, updated_at = ?
+                    WHERE order_id = ?
+                    """,
+                    (message_id, sent_at, order_id),
+                )
+                connection.execute(
+                    "UPDATE customer_orders SET status = 'ACCEPTED_DELIVERY_24H' WHERE order_id = ?",
+                    (order_id,),
+                )
+
+        self._json(
+            201,
+            {
+                "order_id": order_id,
+                "amount": total,
+                "currency": "XOF",
+                "delivery_area": delivery_area,
+                "status": "ACCEPTED_DELIVERY_24H" if notification_status == "ACCEPTED_BY_PROVIDER" else "PENDING_CONFIRMATION",
+                "whatsapp_notification": {
+                    "status": notification_status,
+                    "error": notification_error,
+                },
+                "items": items,
+            },
+        )
 
     def _verify_cinetpay_order(self, transaction_id, user_id=None):
         query = "SELECT * FROM orders WHERE transaction_id = ?"
@@ -642,34 +889,10 @@ class PCMarketHandler(BaseHTTPRequestHandler):
         return saved["status"]
 
     def _create_cinetpay_checkout(self, payload, user):
-        items = payload.get("items")
-        if not isinstance(items, list) or not 1 <= len(items) <= 20:
-            self._error(400, "Le panier est vide ou invalide.")
-            return
-        total = 0
-        for item in items:
-            if not isinstance(item, dict):
-                self._error(400, "Un article du panier est invalide.")
-                return
-            product_id = item.get("id")
-            quantity = item.get("quantity")
-            if (
-                not isinstance(product_id, str)
-                or not isinstance(quantity, int)
-                or isinstance(quantity, bool)
-                or not 1 <= quantity <= 10
-            ):
-                self._error(400, "Un article du panier est invalide.")
-                return
-            price = PAYMENT_PRODUCTS.get(product_id)
-            if price is None and re.fullmatch(r"api-[1-9][0-9]{0,8}", product_id):
-                price = 200000
-            if price is None:
-                self._error(400, "Un article du panier n’est pas disponible.")
-                return
-            total += price * quantity
-        if total <= 0 or total > 50000000:
-            self._error(400, "Le montant du panier est invalide.")
+        try:
+            items, total = validate_order_items(payload.get("items"))
+        except ValueError as error:
+            self._error(400, str(error))
             return
 
         transaction_id = secrets.token_hex(16)
