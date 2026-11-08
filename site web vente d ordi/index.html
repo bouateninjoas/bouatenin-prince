@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUTURE TECH | Boutique informatique</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<header class="header">
+    <a href="#accueil" class="logo">FUTURE <span>TECH</span></a>
+
+    <nav>
+        <a href="#accueil">Accueil</a>
+        <a href="#boutique">Boutique</a>
+        <a href="#services">Livraison</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="header-buttons">
+        <button class="btn-outline" id="openAuth">Connexion</button>
+        <button class="btn" id="openCart">
+            Panier (<span id="cartCount">0</span>)
+        </button>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero" id="accueil">
+        <div class="hero-content">
+            <p class="subtitle">LA TECHNOLOGIE DE DEMAIN</p>
+            <h1>BIENVENUE CHEZ<br>
+                <span>FUTURE TECH</span>
+            </h1>
+            <p>Découvrez les meilleurs ordinateurs Lenovo,
+                mini PC et accessoires informatiques.</p>
+            <a href="#boutique" class="btn">DÉCOUVRIR NOS PRODUITS</a>
+        </div>
+    </section>
+
+    <section id="boutique">
+        <p class="subtitle">NOTRE COLLECTION</p>
+        <h2>Nos produits</h2>
+
+        <div class="filters">
+            <button class="filter active" data-filter="Tous">Tout</button>
+            <button class="filter" data-filter="Lenovo">Lenovo</button>
+            <button class="filter" data-filter="Mini PC">Mini PC</button>
+            <button class="filter" data-filter="Accessoires">Accessoires</button>
+        
+        </div>
+
+        <div class="products-grid" id="products"></div>
+    </section>
+
+    <section id="services">
+        <p class="subtitle">NOS ENGAGEMENTS</p>
+        <h2>Pourquoi FUTURE TECH ?</h2>
+
+        <div class="services-grid">
+            <article class="service-card">
+                <div>🚚</div>
+                <h3>Livraison nationale</h3>
+                <p>Nous livrons partout en Côte d'Ivoire.</p>
+            </article>
+
+            <article class="service-card">
+                <div>💵</div>
+                <h3>Paiement à la livraison</h3>
+                <p>Payez lorsque vous recevez votre commande.</p>
+            </article>
+
+            <article class="service-card">
+                <div>📱</div>
+                <h3>Commande WhatsApp</h3>
+                <p>Confirmez votre commande avec notre équipe.</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <p class="subtitle">CONTACT</p>
+        <h2>Une question ?</h2>
+        <p>Contactez FUTURE TECH sur WhatsApp.</p>
+        <a class="btn whatsapp" href="https://wa.me/2250757589892">
+            CONTACTER LA BOUTIQUE
+        </a>
+    </section>
+
+</main>
+
+<footer>
+    <h3>FUTURE TECH</h3>
+    <p>La technologie de demain.</p>
+    <p>© 2026 FUTURE TECH - Côte d'Ivoire</p>
+</footer>
+
+<!-- PANIER -->
+<div class="modal" id="cartModal">
+    <div class="modal-content">
+        <button class="close" data-close="cartModal">×</button>
+        <h2>Mon panier</h2>
+        <div id="cartItems"></div>
+        <h3 id="cartTotal">Total : 0 FCFA</h3>
+        <button class="btn full" id="checkoutButton">
+            COMMANDER
+        </button>
+    </div>
+</div>
+
+<!-- COMMANDE -->
+<div class="modal" id="orderModal">
+    <div class="modal-content">
+        <button class="close" data-close="orderModal">×</button>
+        <h2>Informations de livraison</h2>
+
+        <form id="orderForm">
+            <input id="customerName" placeholder="Nom complet" required>
+            <input id="customerPhone" type="tel" placeholder="Téléphone" required>
+            <input id="customerCity" placeholder="Ville / Commune" required>
+            <input id="customerAddress" placeholder="Adresse de livraison" required>
+            <input id="customerNote" placeholder="Note facultative">
+
+            <p class="payment">
+                Paiement à la livraison en FCFA.
+            </p>
+
+            <button class="btn whatsapp full" type="submit">
+                ENVOYER SUR WHATSAPP
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- COMPTE CLIENT -->
+<div class="modal" id="authModal">
+    <div class="modal-content">
+        <button class="close" data-close="authModal">×</button>
+        <h2>Espace client</h2>
+
+        <div class="filters">
+            <button class="filter active" id="loginTab">Connexion</button>
+            <button class="filter" id="signupTab">Inscription</button>
+        </div>
+
+        <form id="authForm">
+            <input id="authEmail" type="email"
+                   placeholder="Adresse e-mail" required>
+            <input id="authPassword" type="password"
+                   placeholder="Mot de passe" minlength="8" required>
+            <button class="btn full" id="authSubmit">
+                SE CONNECTER
+            </button>
+        </form>
+
+        <p class="warning">
+            Authentification de démonstration.
+            Une connexion sécurisée doit être installée avant publication.
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
