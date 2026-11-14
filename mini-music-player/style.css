@@ -1,0 +1,115 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: white;
+}
+
+.player {
+    width: 340px;
+    padding: 30px;
+    text-align: center;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.08);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    backdrop-filter: blur(15px);
+}
+
+.player h2 {
+    margin-bottom: 25px;
+    font-size: 22px;
+}
+
+.album-cover {
+    width: 230px;
+    height: 230px;
+    margin: auto;
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff758c, #845ec2);
+}
+
+.album-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.song-info {
+    margin: 25px 0 20px;
+}
+
+.song-info h3 {
+    font-size: 21px;
+    margin-bottom: 8px;
+}
+
+.song-info p {
+    color: #b8c3d9;
+    font-size: 14px;
+}
+
+.progress-container {
+    margin: 20px 0;
+}
+
+#progress {
+    width: 100%;
+    cursor: pointer;
+    accent-color: #ff7eb3;
+}
+
+.time {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #b8c3d9;
+}
+
+.controls {
+    margin: 25px 0;
+}
+
+#playBtn {
+    width: 65px;
+    height: 65px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#playBtn:hover {
+    transform: scale(1.1);
+}
+
+.upload {
+    display: block;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.upload:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.upload input {
+    display: none;
+}

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paiement sécurisé | Nimba</title>
+    <style>
+      :root {
+        --bg: #f3f5f8;
+        --card: #ffffff;
+        --text: #122033;
+        --muted: #5d6f82;
+        --line: rgba(18, 32, 51, 0.08);
+        --green: #1f8d6d;
+        --green-dark: #0f4f3e;
+        --green-soft: #ebfaf5;
+        --gold: #f5ba52;
+        --shadow: 0 22px 46px rgba(17, 24, 39, 0.08);
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(180deg, #edf5f3 0%, #f6f8fb 100%);
+        color: var(--text);
+      }
+      a { color: inherit; text-decoration: none; }
+      button, input { font: inherit; }
+      img { max-width: 100%; display: block; }
+
+      .container { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+      .page-shell { padding: 26px 0 44px; }
+
+      .topbar {
+        display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 30px;
+      }
+      .brand {
+        display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: 0.02em;
+      }
+      .brand-mark {
+        width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; font-size: 1.2rem; color: white; background: linear-gradient(135deg, var(--green), #18b59b);
+      }
+      .header-link {
+        color: var(--muted); font-weight: 700; border: 1px solid var(--line); padding: 10px 18px; border-radius: 999px; background: rgba(255,255,255,0.8);
+      }
+
+      .checkout-grid {
+        display: grid; grid-template-columns: 1.02fr 1.18fr; gap: 24px; align-items: start;
+      }
+
+      .panel {
+        background: rgba(255,255,255,0.82); border: 1px solid rgba(255,255,255,0.8); backdrop-filter: blur(8px); border-radius: 28px; box-shadow: var(--shadow);
+      }
+
+      .summary-panel { padding: 24px; }
+      .mini-badge {
+        display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 999px; background: var(--green-soft); color: var(--green-dark); font-size: 0.8rem; font-weight: 700;
+      }
+      .summary-panel h1 {
+        margin: 18px 0 6px; font-size: clamp(2rem, 2vw, 2.6rem); line-height: 1.1; letter-spacing: -0.05em;
+      }
+      .summary-panel .subline {
+        color: var(--muted); line-height: 1.7; margin: 0 0 22px;
+      }
+
+      .stepper {
+        display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 22px;
+      }
+      .step {
+        display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; font-size: 0.8rem; font-weight: 800; background: rgba(31,141,109,0.1); color: var(--green-dark); border: 1px solid rgba(31,141,109,0.14);
+      }
+      .step.done { background: var(--green); color: white; }
+      .line {
+        flex: 1; min-width: 40px; height: 2px; background: rgba(18,32,51,0.08);
+      }
+
+      .order-item {
+        display: grid; grid-template-columns: 90px 1fr auto; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line);
+      }
+      .order-item:last-child { border-bottom: none; }
+      .thumb {
+        width: 90px; height: 90px; border-radius: 18px; overflow: hidden; background: #ddd;
+      }
+      .thumb img { width: 100%; height: 100%; object-fit: cover; }
+      .item-meta h3 { margin: 0; font-size: 1.02rem; }
+      .item-meta p { margin: 6px 0 0; color: var(--muted); font-size: 0.82rem; }
+      .item-price { font-weight: 800; }
+
+      .totals {
+        margin-top: 18px; background: #f6f8fb; border-radius: 18px; padding: 18px 16px;
+      }
+      .totals-row {
+        display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; color: var(--muted); font-size: 0.94rem;
+      }
+      .totals-row strong { color: var(--text); }
+      .totals-row.total {
+        margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--text); font-size: 1.05rem; font-weight: 800;
+      }
+
+      .form-panel { padding: 24px 24px 28px; }
+      .form-header {
+        display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--line);
+      }
+      .form-header h2 { margin: 0; font-size: 1.7rem; }
+      .shield {
+        display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: rgba(31,141,109,0.08); color: var(--green-dark); font-size: 0.78rem; font-weight: 700;
+      }
+
+      .method-grid {
+        display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 20px;
+      }
+      .pay-method {
+        border: 1px solid var(--line); border-radius: 18px; padding: 14px 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #fff; cursor: pointer;
+      }
+      .pay-method.active {
+        border-color: rgba(31,141,109,0.4); background: rgba(31,141,109,0.04); box-shadow: inset 0 0 0 1px rgba(31,141,109,0.08);
+      }
+      .method-left { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+      .method-icon {
+        width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; font-weight: 800; background: linear-gradient(135deg, #dff8ee, #d5f0ff); color: var(--green-dark);
+      }
+      .radio {
+        width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(17,24,39,0.2); position: relative;
+      }
+      .pay-method.active .radio::after {
+        content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--green);
+      }
+
+      .form-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px;
+      }
+      .field {
+        display: flex; flex-direction: column; gap: 8px;
+      }
+      .field.full { grid-column: 1 / -1; }
+      label {
+        font-size: 0.82rem; font-weight: 700; color: var(--muted);
+      }
+      input {
+        width: 100%; border: 1px solid var(--line); border-radius: 14px; background: #fff; min-height: 52px; padding: 0 14px; font-size: 1rem; color: var(--text); outline: none;
+      }
+      input:focus { border-color: rgba(31,141,109,0.4); box-shadow: 0 0 0 3px rgba(31,141,109,0.08); }
+
+      .security-note {
+        display: flex; align-items: center; gap: 10px; margin: 18px 0 22px; color: var(--muted); font-size: 0.82rem;
+      }
+      .security-note .lock { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: rgba(31,141,109,0.08); color: var(--green-dark); font-weight: 800; }
+
+      .primary-button {
+        width: 100%; min-height: 58px; border: none; border-radius: 16px; background: linear-gradient(135deg, var(--green), #1bb894); color: white; font-weight: 800; font-size: 1.02rem; cursor: pointer; box-shadow: 0 18px 28px rgba(31,141,109,0.22);
+      }
+      .back-link {
+        display: inline-block; margin-top: 16px; color: var(--muted); text-align: center; width: 100%; font-size: 0.9rem;
+      }
+
+      @media (max-width: 980px) {
+        .checkout-grid { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 560px) {
+        .method-grid, .form-grid { grid-template-columns: 1fr; }
+        .topbar { flex-wrap: wrap; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container page-shell">
+      <header class="topbar">
+        <div class="brand" aria-label="Nimba logo">
+          <div class="brand-mark">N</div>
+          <span>Nimba</span>
+        </div>
+        <a class="header-link" href="index.html">Retour au site</a>
+      </header>
+
+      <main class="checkout-grid">
+        <aside class="panel summary-panel" aria-label="Résumé de commande">
+          <div class="mini-badge">✔ Paiement sécurisé</div>
+          <h1>Finalisez votre commande</h1>
+          <p class="subline">Confiez votre achat à une plateforme vérifiée et des méthodes de paiement adaptées au marché ivoirien.</p>
+
+          <div class="stepper" aria-label="Étapes de paiement">
+            <div class="step done">1</div>
+            <div class="line"></div>
+            <div class="step done">2</div>
+            <div class="line"></div>
+            <div class="step">3</div>
+          </div>
+
+          <div class="order-item">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=800&q=80" alt="Produit 1" /></div>
+            <div class="item-meta">
+              <h3>Casque sans fil Pro</h3>
+              <p>Quantité : 1 · Livraison express</p>
+            </div>
+            <div class="item-price">32 500 FCFA</div>
+          </div>
+
+          <div class="order-item">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80" alt="Produit 2" /></div>
+            <div class="item-meta">
+              <h3>Sneakers premium</h3>
+              <p>Quantité : 1 · Livraison standard</p>
+            </div>
+            <div class="item-price">18 900 FCFA</div>
+          </div>
+
+          <div class="totals">
+            <div class="totals-row"><span>Sous-total</span><strong>51 400 FCFA</strong></div>
+            <div class="totals-row"><span>Livraison</span><strong>1 600 FCFA</strong></div>
+            <div class="totals-row"><span>Frais de service</span><strong>500 FCFA</strong></div>
+            <div class="totals-row total"><span>Total</span><strong>53 500 FCFA</strong></div>
+          </div>
+        </aside>
+
+        <section class="panel form-panel" id="serenite" aria-label="Formulaire de paiement">
+          <div class="form-header">
+            <h2>Paiement</h2>
+            <div class="shield">🔒 256-bit SSL</div>
+          </div>
+
+          <div class="method-grid" aria-label="Méthodes de paiement">
+            <div class="pay-method active">
+              <div class="method-left"><div class="method-icon">M</div> Mobile Money</div>
+              <div class="radio"></div>
+            </div>
+            <div class="pay-method">
+              <div class="method-left"><div class="method-icon">V</div> Visa</div>
+              <div class="radio"></div>
+            </div>
+            <div class="pay-method">
+              <div class="method-left"><div class="method-icon">W</div> Wave</div>
+              <div class="radio"></div>
+            </div>
+            <div class="pay-method">
+              <div class="method-left"><div class="method-icon">O</div> Orange</div>
+              <div class="radio"></div>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field full">
+              <label for="name">Nom du titulaire</label>
+              <input id="name" type="text" placeholder="Ex: Marie Kouassi" />
+            </div>
+            <div class="field full">
+              <label for="phone">Numéro de téléphone</label>
+              <input id="phone" type="tel" placeholder="Ex: +225 07 12 34 56 78" />
+            </div>
+            <div class="field full">
+              <label for="email">Adresse e-mail</label>
+              <input id="email" type="email" placeholder="nom@exemple.com" />
+            </div>
+            <div class="field full">
+              <label for="adresse">Adresse de livraison</label>
+              <input id="adresse" type="text" placeholder="Abidjan, Plateau" />
+            </div>
+          </div>
+
+          <div class="security-note">
+            <div class="lock">🔒</div>
+            <span>Vos informations bancaires et de paiement sont sécurisées et chiffrées.</span>
+          </div>
+
+          <button class="primary-button">Payer 53 500 FCFA</button>
+          <a href="index.html" class="back-link">Retourner au panier</a>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
