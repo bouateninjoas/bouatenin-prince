@@ -161,6 +161,15 @@ h1, h2, h3, p { margin-top: 0; }
 .demo-notice { padding-top: 10px; border-top: 1px solid #f0f0eb; color: #686e64; }
 .form-notice { display: none; margin: 4px 0 0; padding: 12px; background: #edf5e6; color: var(--green-dark); font-size: 12px; line-height: 1.7; }
 .form-notice.is-visible { display: block; }
+.account-grid { display: grid; grid-template-columns: 1fr .88fr; align-items: start; gap: 80px; }
+.account-copy { padding-top: 21px; }
+.form-brand { justify-content: center; margin-bottom: 22px; }
+.account-card form { display: grid; gap: 9px; }
+.account-card .form-notice { margin-top: 4px; }
+.account-terms { display: flex; align-items: start; gap: 9px; margin-top: 6px; color: var(--muted); font-size: 10px; line-height: 1.7; }
+.account-terms input { flex: 0 0 auto; margin: 2px 0 0; accent-color: var(--green); }
+.account-switch { margin: -7px 0 17px; color: var(--muted); font-size: 11px; }
+.account-switch a, .signup-aside a { color: var(--green); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .signup-bottom { padding-block: 76px; }
 .signup-bottom-inner { max-width: 670px; text-align: center; }
 .signup-bottom h2 { margin-bottom: 16px; font-family: "Manrope", sans-serif; font-size: clamp(32px, 4vw, 44px); font-weight: 600; letter-spacing: -2px; line-height: 1.25; }
@@ -194,6 +203,7 @@ h1, h2, h3, p { margin-top: 0; }
   .feature-page-photo { height: 330px; }
   .signup-hero { padding-block: 40px 54px; }
   .signup-grid { grid-template-columns: 1fr; gap: 30px; }
+  .account-grid { grid-template-columns: 1fr; gap: 30px; }
   .signup-copy { padding-top: 0; }
   .signup-copy h1 { font-size: clamp(41px, 10vw, 56px); }
   .signup-card { padding: 23px 20px; }

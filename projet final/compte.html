@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Créez votre compte MarketCI pour découvrir les boutiques locales ou préparer votre espace vendeur.">
+  <title>Créer un compte — MarketCI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="compte.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><div class="container nav-wrap">
+    <a class="brand" href="index.html" aria-label="MarketCI, accueil"><span class="brand-mark">M</span><span>market<span class="brand-accent">ci</span></span></a>
+    <nav class="main-nav" aria-label="Navigation principale"><a href="index.html">Accueil</a><a href="vendeurs.html">Boutiques</a><a href="paiements.html">Paiement</a><a href="livraison.html">Livraison</a></nav>
+    <a class="button button-dark nav-cta" href="inscription.html">Recevoir les infos <span aria-hidden="true">↗</span></a>
+  </div></header>
+  <main>
+    <section class="signup-hero">
+      <div class="container account-grid">
+        <div class="signup-copy account-copy">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> Rejoignez MarketCI</p>
+          <h1>Le commerce local est <span>à portée de clic.</span></h1>
+          <p class="signup-lead">Créez votre profil pour préparer votre expérience MarketCI. Que vous soyez ici pour découvrir de nouvelles boutiques ou développer la vôtre, vous êtes au bon endroit.</p>
+          <ul class="signup-benefits">
+            <li><span aria-hidden="true">✓</span> Un profil adapté à votre activité</li>
+            <li><span aria-hidden="true">✓</span> Vos préférences réunies en un seul endroit</li>
+            <li><span aria-hidden="true">✓</span> Une première étape pour rejoindre la communauté</li>
+          </ul>
+          <p class="signup-aside"><span class="signup-aside-star" aria-hidden="true">✳</span><span>Vous souhaitez simplement en savoir plus ? <a href="inscription.html">Inscrivez-vous pour recevoir nos informations.</a></span></p>
+        </div>
+        <div class="signup-card account-card">
+          <a class="brand form-brand" href="index.html" aria-label="MarketCI, revenir à l’accueil"><span class="brand-mark">M</span><span>market<span class="brand-accent">ci</span></span></a>
+          <p class="eyebrow">Votre espace MarketCI</p>
+          <h2>Créer votre compte</h2>
+          <p class="form-intro">Quelques informations suffisent pour commencer.</p>
+          <form id="account-form">
+            <label for="account-name">Nom complet</label>
+            <input id="account-name" name="name" type="text" autocomplete="name" placeholder="Ex. Aïcha Koné" required minlength="2">
+            <label for="account-email">Adresse e-mail</label>
+            <input id="account-email" name="email" type="email" autocomplete="email" placeholder="vous@exemple.com" required>
+            <label for="account-role">Je souhaite rejoindre MarketCI comme…</label>
+            <select id="account-role" name="role" required>
+              <option value="" selected disabled>Choisissez votre profil</option>
+              <option value="acheteur">Acheteur ou acheteuse</option>
+              <option value="vendeur">Vendeur ou vendeuse</option>
+            </select>
+            <label for="account-password">Mot de passe</label>
+            <input id="account-password" name="password" type="password" autocomplete="new-password" placeholder="8 caractères minimum" required minlength="8">
+            <label for="account-confirm">Confirmer le mot de passe</label>
+            <input id="account-confirm" name="confirm" type="password" autocomplete="new-password" placeholder="Saisissez à nouveau le mot de passe" required minlength="8">
+            <label class="account-terms"><input name="terms" type="checkbox" required><span>J’accepte d’être contacté au sujet de MarketCI.</span></label>
+            <button class="button button-green signup-submit" type="submit">Créer mon compte <span aria-hidden="true">→</span></button>
+            <p class="form-notice" id="account-notice" role="status" aria-live="polite"></p>
+            <p class="demo-notice">Prototype : aucune donnée ni aucun mot de passe n’est envoyé ou enregistré. La création de compte réelle sera activée avec un service sécurisé.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container footer-inner"><a class="brand brand-footer" href="index.html"><span class="brand-mark">M</span><span>market<span class="brand-accent">ci</span></span></a><p>Le commerce local, à portée de clic.</p><nav aria-label="Navigation de pied de page"><a href="vendeurs.html">Boutiques</a><a href="paiements.html">Paiement</a><a href="livraison.html">Livraison</a><a href="inscription.html">Recevoir les infos</a></nav><span class="copyright">© 2026 MarketCI</span></div></footer>
+</body>
+</html>
