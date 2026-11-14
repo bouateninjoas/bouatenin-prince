@@ -170,6 +170,19 @@ h1, h2, h3, p { margin-top: 0; }
 .account-terms input { flex: 0 0 auto; margin: 2px 0 0; accent-color: var(--green); }
 .account-switch { margin: -7px 0 17px; color: var(--muted); font-size: 11px; }
 .account-switch a, .signup-aside a { color: var(--green); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.contact-grid { display: grid; grid-template-columns: 1fr .88fr; align-items: start; gap: 80px; }
+.contact-copy { padding-top: 5px; }
+.contact-copy .form-brand { justify-content: flex-start; margin-bottom: 32px; }
+.contact-copy h1 { max-width: 590px; margin-bottom: 20px; font-family: "Manrope", sans-serif; font-size: clamp(46px, 5.5vw, 66px); font-weight: 600; letter-spacing: -4px; line-height: 1.1; }
+.contact-copy h1 span { color: var(--green); font-family: var(--serif); font-weight: 400; font-style: italic; letter-spacing: -2px; }
+.contact-card form { display: grid; gap: 9px; }
+#contact-form > label { margin-top: 5px; color: #39443b; font-size: 11px; font-weight: 700; }
+#contact-form input[type="text"], #contact-form input[type="email"], #contact-form select, #contact-form textarea { width: 100%; padding: 11px 12px; border: 1px solid #dfe3da; border-radius: 3px; background: white; color: var(--ink); font: inherit; font-size: 12px; }
+#contact-form input[type="text"], #contact-form input[type="email"], #contact-form select { min-height: 43px; padding-block: 0; }
+#contact-form textarea { min-height: 110px; resize: vertical; line-height: 1.6; }
+#contact-form input::placeholder, #contact-form textarea::placeholder { color: #a0a59d; }
+#contact-form input:focus, #contact-form select:focus, #contact-form textarea:focus { outline: 2px solid #91b878; outline-offset: 1px; border-color: var(--green); }
+#contact-form code { color: var(--green-dark); }
 .signup-bottom { padding-block: 76px; }
 .signup-bottom-inner { max-width: 670px; text-align: center; }
 .signup-bottom h2 { margin-bottom: 16px; font-family: "Manrope", sans-serif; font-size: clamp(32px, 4vw, 44px); font-weight: 600; letter-spacing: -2px; line-height: 1.25; }
@@ -204,6 +217,8 @@ h1, h2, h3, p { margin-top: 0; }
   .signup-hero { padding-block: 40px 54px; }
   .signup-grid { grid-template-columns: 1fr; gap: 30px; }
   .account-grid { grid-template-columns: 1fr; gap: 30px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 30px; }
+  .contact-copy .form-brand { margin-bottom: 22px; }
   .signup-copy { padding-top: 0; }
   .signup-copy h1 { font-size: clamp(41px, 10vw, 56px); }
   .signup-card { padding: 23px 20px; }

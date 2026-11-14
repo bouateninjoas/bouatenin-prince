@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Contactez l’équipe MarketCI pour en savoir plus sur la marketplace, les boutiques et ses fonctionnalités.">
+  <title>Contact — MarketCI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="contact.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><div class="container nav-wrap">
+    <a class="brand" href="index.html" aria-label="MarketCI, accueil"><span class="brand-mark">M</span><span>market<span class="brand-accent">ci</span></span></a>
+    <nav class="main-nav" aria-label="Navigation principale"><a href="index.html">Accueil</a><a href="vendeurs.html">Boutiques</a><a href="paiements.html">Paiement</a><a href="livraison.html">Livraison</a></nav>
+    <a class="button button-dark nav-cta" href="index.html">Découvrir MarketCI <span aria-hidden="true">↗</span></a>
+  </div></header>
+  <main>
+    <section class="signup-hero">
+      <div class="container contact-grid">
+        <div class="signup-copy contact-copy">
+          <a class="brand form-brand" href="index.html" aria-label="MarketCI, accueil"><span class="brand-mark">M</span><span>market<span class="brand-accent">ci</span></span></a>
+          <p class="eyebrow"><span class="eyebrow-dot"></span> Contactez notre équipe</p>
+          <h1>Une question ?<br><span>Parlons-en.</span></h1>
+          <p class="signup-lead">Vous souhaitez en savoir plus sur MarketCI, proposer votre boutique ou simplement nous poser une question ? Envoyez-nous un message.</p>
+          <ul class="signup-benefits">
+            <li><span aria-hidden="true">✓</span> Un échange autour de votre projet</li>
+            <li><span aria-hidden="true">✓</span> Des informations sur les fonctionnalités</li>
+            <li><span aria-hidden="true">✓</span> Une demande adaptée à votre profil</li>
+          </ul>
+          <p class="signup-aside"><span class="signup-aside-star" aria-hidden="true">✳</span><span>Commerçant ou acheteur, dites-nous ce que vous recherchez : nous orienterons votre demande vers le bon sujet.</span></p>
+        </div>
+        <div class="signup-card contact-card">
+          <p class="eyebrow">Nous sommes à votre écoute</p>
+          <h2>Envoyer un message</h2>
+          <p class="form-intro">Remplissez le formulaire et votre application de messagerie préparera votre demande.</p>
+          <form id="contact-form">
+            <label for="contact-name">Votre nom</label>
+            <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Ex. Aïcha Koné" required minlength="2">
+            <label for="contact-email">Votre adresse e-mail</label>
+            <input id="contact-email" name="email" type="email" autocomplete="email" placeholder="vous@exemple.com" required>
+            <label for="contact-topic">Votre demande concerne…</label>
+            <select id="contact-topic" name="topic" required>
+              <option value="" selected disabled>Choisissez un sujet</option>
+              <option value="Découvrir MarketCI">Découvrir MarketCI</option>
+              <option value="Devenir vendeur">Devenir vendeur</option>
+              <option value="Paiements et commandes">Paiements et commandes</option>
+              <option value="Livraison">Livraison</option>
+              <option value="Autre demande">Autre demande</option>
+            </select>
+            <label for="contact-message">Votre message</label>
+            <textarea id="contact-message" name="message" rows="5" placeholder="Comment pouvons-nous vous aider ?" required minlength="10"></textarea>
+            <label class="account-terms"><input name="consent" type="checkbox" required><span>J’accepte que l’équipe MarketCI utilise ces informations pour répondre à ma demande.</span></label>
+            <button class="button button-green signup-submit" type="submit">Préparer mon message <span aria-hidden="true">→</span></button>
+            <p class="form-notice" id="contact-notice" role="status" aria-live="polite"></p>
+            <p class="demo-notice">L’adresse e-mail de l’entreprise n’étant pas encore configurée, l’envoi sera activé dès qu’elle sera renseignée dans <code>contact.js</code>.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container footer-inner"><a class="brand brand-footer" href="index.html"><span class="brand-mark">M</span><span>market<span class="brand-accent">ci</span></span></a><p>Le commerce local, à portée de clic.</p><nav aria-label="Navigation de pied de page"><a href="vendeurs.html">Boutiques</a><a href="paiements.html">Paiement</a><a href="livraison.html">Livraison</a><a href="inscription.html">Recevoir les infos</a><a href="compte.html">Créer un compte</a></nav><span class="copyright">© 2026 MarketCI</span></div></footer>
+</body>
+</html>
