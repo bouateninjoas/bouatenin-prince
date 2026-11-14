@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{% if page == "login" %}Connexion administration{% else %}Administration{% endif %} — MarketCI</title>
+  <link rel="stylesheet" href="/style.css">
+  {% if page == "dashboard" %}<script src="/admin.js" defer></script>{% endif %}
+</head>
+<body class="admin-body">
+  {% if page == "login" %}
+    <main class="admin-login">
+      <a class="brand" href="/" aria-label="MarketCI, accueil"><span class="brand-mark" aria-hidden="true">M</span><span>market<span class="brand-accent">ci</span></span></a>
+      <section class="form-card admin-login-card">
+        <p class="eyebrow">Espace privé</p>
+        <h1>Administration MarketCI</h1>
+        <p>Connectez-vous pour gérer le catalogue et consulter les demandes reçues.</p>
+        {% if error %}<p class="admin-alert error" role="alert">{{ error }}</p>{% endif %}
+        <form action="{{ url_for('admin_login_post') }}" method="post">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+          <div class="form-field"><label for="username">Identifiant</label><input id="username" name="username" autocomplete="username" required></div>
+          <div class="form-field"><label for="password">Mot de passe</label><input id="password" name="password" type="password" autocomplete="current-password" required></div>
+          <button class="form-submit" type="submit">Se connecter <span aria-hidden="true">→</span></button>
+        </form>
+        <a class="admin-back-link" href="/">← Retour à MarketCI</a>
+      </section>
+    </main>
+  {% elif page == "setup" %}
+    <main class="admin-login">
+      <a class="brand" href="/" aria-label="MarketCI, accueil"><span class="brand-mark" aria-hidden="true">M</span><span>market<span class="brand-accent">ci</span></span></a>
+      <section class="form-card admin-login-card">
+        <p class="eyebrow">Première configuration</p>
+        <h1>Crée ton compte administrateur</h1>
+        <p>Choisis un identifiant et un mot de passe. Ils seront enregistrés de manière sécurisée sur cet ordinateur.</p>
+        {% if error %}<p class="admin-alert error" role="alert">{{ error }}</p>{% endif %}
+        <form action="{{ url_for('admin_setup_post') }}" method="post">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+          <div class="form-field"><label for="username">Identifiant</label><input id="username" name="username" autocomplete="username" minlength="3" maxlength="50" pattern="[A-Za-z0-9._\x2d]{3,50}" value="admin" required></div>
+          <div class="form-field"><label for="password">Mot de passe (12 caractères minimum)</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="1024" required></div>
+          <div class="form-field"><label for="password-confirmation">Confirme ton mot de passe</label><input id="password-confirmation" name="password_confirmation" type="password" autocomplete="new-password" minlength="12" maxlength="1024" required></div>
+          <button class="form-submit" type="submit">Créer mon compte et me connecter <span aria-hidden="true">→</span></button>
+        </form>
+        <a class="admin-back-link" href="/">← Retour à MarketCI</a>
+      </section>
+    </main>
+  {% else %}
+    <header class="admin-header">
+      <div class="admin-header-inner">
+        <a class="brand" href="/" aria-label="MarketCI, accueil"><span class="brand-mark" aria-hidden="true">M</span><span>market<span class="brand-accent">ci</span></span></a>
+        <span class="admin-header-label">Espace d’administration</span>
+        <form action="{{ url_for('admin_logout') }}" method="post">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+          <button class="admin-logout" type="submit">Se déconnecter</button>
+        </form>
+      </div>
+    </header>
+    <main class="admin-main">
+      <div class="admin-title-row">
+        <div><p class="eyebrow">Tableau de bord privé</p><h1>Gérer MarketCI</h1><p>Modifiez les catégories et les produits, et consultez les messages reçus.</p></div>
+        <a class="admin-back-link" href="/">Voir la boutique ↗</a>
+      </div>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="admin-flashes" role="status">
+            {% for category, message in messages %}<p class="admin-alert {{ category }}">{{ message }}</p>{% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <section class="admin-section" id="categories">
+        <div class="admin-section-heading"><div><p class="eyebrow">Catalogue</p><h2>Catégories <span class="admin-count">{{ categories|length }}</span></h2></div></div>
+        <form class="admin-add-category" action="{{ url_for('admin_create_category') }}" method="post">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+          <div class="form-field"><label for="new-category-name">Nouvelle catégorie</label><input id="new-category-name" name="name" maxlength="100" placeholder="Nom de la catégorie" required></div>
+          <div class="form-field admin-icon-field"><label for="new-category-icon">Icône</label><input id="new-category-icon" name="icon" value="✨" maxlength="8" required></div>
+          <button class="form-submit" type="submit">Ajouter</button>
+        </form>
+        <div class="admin-category-list">
+          {% for category in categories %}
+            <details class="admin-category-item">
+              <summary><span>{{ category["icon"] }} {{ category["name"] }}</span><span class="admin-category-count">{{ category["product_count"] }} produit(s) · modifier</span></summary>
+              <div class="admin-category-edit">
+                <form action="{{ url_for('admin_edit_category', category_id=category['id']) }}" method="post">
+                  <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                  <div class="form-field"><label>Nom</label><input name="name" value="{{ category['name'] }}" maxlength="100" required></div>
+                  <div class="form-field admin-icon-field"><label>Icône</label><input name="icon" value="{{ category['icon'] }}" maxlength="8" required></div>
+                  <button class="admin-small-button" type="submit">Enregistrer</button>
+                </form>
+                <form action="{{ url_for('admin_delete_category', category_id=category['id']) }}" method="post" data-confirm="Supprimer cette catégorie ?">
+                  <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                  <button class="admin-delete-button" type="submit">Supprimer la catégorie</button>
+                </form>
+              </div>
+            </details>
+          {% else %}
+            <p class="admin-empty">Aucune catégorie pour le moment.</p>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="admin-section" id="products">
+        <div class="admin-section-heading"><div><p class="eyebrow">Gestion du stock</p><h2>Produits <span class="admin-count">{{ products|length }}</span></h2></div></div>
+        <details class="admin-add-product">
+          <summary class="form-submit">Ajouter un produit <span aria-hidden="true">＋</span></summary>
+          <form action="{{ url_for('admin_create_product') }}" method="post" class="admin-product-form">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+            <div class="form-grid">
+              <div class="form-field"><label for="product-name">Nom du produit</label><input id="product-name" name="name" maxlength="120" required></div>
+              <div class="form-field"><label for="product-category">Catégorie</label><select id="product-category" name="category" required>{% for category in categories %}<option>{{ category["name"] }}</option>{% endfor %}</select></div>
+              <div class="form-field"><label for="product-price">Prix (FCFA)</label><input id="product-price" name="price" type="number" min="1" max="999999999" required></div>
+              <div class="form-field"><label for="product-image">Identifiant d’image Unsplash</label><input id="product-image" name="image" placeholder="photo-1511707171634" pattern="photo-[A-Za-z0-9-]{3,100}" required></div>
+              <div class="form-field"><label for="product-badge">Badge (facultatif)</label><input id="product-badge" name="badge" maxlength="30"></div>
+            </div>
+            <button class="form-submit" type="submit">Enregistrer le produit</button>
+          </form>
+        </details>
+        <div class="admin-product-list">
+          {% for product in products %}
+            <details class="admin-product-item">
+              <summary><span><strong>{{ product["name"] }}</strong><small>{{ product["category"] }} · {{ "{:,}".format(product["price"]).replace(",", " ") }} FCFA</small></span><span>Modifier ou supprimer</span></summary>
+              <div class="admin-product-edit">
+                <form action="{{ url_for('admin_edit_product', product_id=product['id']) }}" method="post">
+                  <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                  <div class="form-grid">
+                    <div class="form-field"><label>Nom</label><input name="name" value="{{ product['name'] }}" maxlength="120" required></div>
+                    <div class="form-field"><label>Catégorie</label><select name="category" required>{% for category in categories %}<option {% if category["name"] == product["category"] %}selected{% endif %}>{{ category["name"] }}</option>{% endfor %}</select></div>
+                    <div class="form-field"><label>Prix (FCFA)</label><input name="price" type="number" min="1" max="999999999" value="{{ product['price'] }}" required></div>
+                    <div class="form-field"><label>Identifiant d’image Unsplash</label><input name="image" value="{{ product['image'] }}" pattern="photo-[A-Za-z0-9-]{3,100}" required></div>
+                    <div class="form-field"><label>Badge</label><input name="badge" value="{{ product['badge'] }}" maxlength="30"></div>
+                  </div>
+                  <button class="admin-small-button" type="submit">Enregistrer les modifications</button>
+                </form>
+                <form action="{{ url_for('admin_delete_product', product_id=product['id']) }}" method="post" data-confirm="Supprimer ce produit ?">
+                  <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                  <button class="admin-delete-button" type="submit">Supprimer le produit</button>
+                </form>
+              </div>
+            </details>
+          {% else %}
+            <p class="admin-empty">Aucun produit dans le catalogue.</p>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="admin-section" id="inquiries">
+        <div class="admin-section-heading"><div><p class="eyebrow">Messages enregistrés</p><h2>Demandes reçues <span class="admin-count">{{ inquiries|length }}</span></h2></div></div>
+        <div class="admin-inquiry-list">
+          {% for inquiry in inquiries %}
+            <article class="admin-inquiry {% if inquiry['is_read'] %}is-read{% endif %}">
+              <div class="admin-inquiry-top"><span class="admin-kind">{{ {"contact": "Contact", "information": "Informations", "seller": "Vendeur"}.get(inquiry["kind"], inquiry["kind"]) }}</span><time>{{ inquiry["created_at"] }}</time></div>
+              <h3>{{ inquiry["subject"] }}</h3>
+              <p><strong>{{ inquiry["name"] }}</strong> · <a href="mailto:{{ inquiry['email'] }}">{{ inquiry["email"] }}</a></p>
+              {% if inquiry["message"] %}<p class="admin-message">{{ inquiry["message"] }}</p>{% endif %}
+              {% if not inquiry["is_read"] %}
+                <form action="{{ url_for('admin_mark_inquiry_read', inquiry_id=inquiry['id']) }}" method="post">
+                  <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                  <button class="admin-small-button" type="submit">Marquer comme lu</button>
+                </form>
+              {% else %}
+                <span class="admin-read-label">Lu</span>
+              {% endif %}
+            </article>
+          {% else %}
+            <p class="admin-empty">Aucune demande reçue.</p>
+          {% endfor %}
+        </div>
+      </section>
+    </main>
+  {% endif %}
+</body>
+</html>

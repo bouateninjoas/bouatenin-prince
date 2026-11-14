@@ -3,75 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Inscrivez-vous pour recevoir les informations sur MarketCI et découvrir le commerce local autrement.">
+  <meta name="description" content="Demandez des informations sur MarketCI : la marketplace généraliste des vendeurs et clients en Côte d’Ivoire.">
   <title>Recevoir les informations — MarketCI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script src="inscription.js" defer></script>
+  <script src="forms.js" defer></script>
 </head>
-<body>
-  <header class="site-header"><div class="container nav-wrap">
-    <a class="brand" href="index.html" aria-label="MarketCI, accueil"><span class="brand-mark">M</span><span>market<span class="brand-accent">ci</span></span></a>
-    <nav class="main-nav" aria-label="Navigation principale"><a href="index.html">Accueil</a><a href="vendeurs.html">Boutiques</a><a href="paiements.html">Paiement</a><a href="livraison.html">Livraison</a></nav>
-    <a class="button button-dark nav-cta" href="compte.html">Créer un compte <span aria-hidden="true">↗</span></a>
-  </div></header>
+<body id="top">
+  <div class="announcement"><p>MarketCI <span aria-hidden="true">✦</span> Mode, maison, beauté, courses et bien plus</p><a href="contact.html">Une question ? <span aria-hidden="true">↗</span></a></div>
+  <header class="site-header"><div class="container header-main page-header"><a class="brand" href="index.html" aria-label="MarketCI, accueil"><span class="brand-mark" aria-hidden="true">M</span><span>market<span class="brand-accent">ci</span></span></a><nav class="page-nav" aria-label="Navigation principale"><a href="index.html">Accueil</a><a href="vendeurs.html">Boutiques</a><a href="paiements.html">Paiement</a><a href="livraison.html">Livraison</a></nav><a class="primary-button header-cta" href="contact.html">Nous contacter <span aria-hidden="true">↗</span></a></div></header>
   <main>
-    <section class="signup-hero">
-      <div class="container signup-grid">
-        <div class="signup-copy">
-          <p class="eyebrow"><span class="eyebrow-dot"></span> MarketCI se prépare pour vous</p>
-          <h1>Le commerce local a de belles choses <span>à vous raconter.</span></h1>
-          <p class="signup-lead">Recevez les prochaines informations sur MarketCI, découvrez les boutiques qui nous rejoignent et soyez parmi les premiers à explorer la plateforme.</p>
-          <ul class="signup-benefits">
-            <li><span aria-hidden="true">✓</span> Des nouvelles sur le lancement de MarketCI</li>
-            <li><span aria-hidden="true">✓</span> Les coulisses des boutiques locales</li>
-            <li><span aria-hidden="true">✓</span> Des conseils pour acheter ou vendre en ligne</li>
-          </ul>
-          <p class="signup-aside"><span class="signup-aside-star" aria-hidden="true">✳</span><span>Vous êtes commerçant ? Indiquez-le dans le formulaire : les informations seront adaptées à votre activité.</span></p>
-        </div>
-        <div class="signup-card" id="formulaire">
-          <p class="eyebrow">Restez dans la boucle</p>
-          <h2>Recevoir plus d’informations</h2>
-          <p class="form-intro">Laissez-nous vos coordonnées et dites-nous ce qui vous intéresse.</p>
-          <p class="account-switch">Prêt à créer votre profil ? <a href="compte.html">Créer un compte MarketCI</a>.</p>
-          <form id="signup-form">
-            <label for="name">Votre nom</label>
-            <input id="name" name="name" type="text" autocomplete="name" placeholder="Ex. Aïcha Koné" required>
-            <label for="email">Votre adresse e-mail</label>
-            <input id="email" name="email" type="email" autocomplete="email" placeholder="vous@exemple.com" required>
-            <label for="profile">Vous êtes…</label>
-            <select id="profile" name="profile" required>
-              <option value="" selected disabled>Choisissez une réponse</option>
-              <option value="acheteur">À la recherche de belles trouvailles</option>
-              <option value="vendeur">Commerçant ou entrepreneur</option>
-              <option value="curieux">Simplement curieux</option>
-            </select>
-            <fieldset>
-              <legend>Quel sujet vous intéresse le plus ?</legend>
-              <label class="interest-option"><input type="radio" name="interest" value="decouverte" checked><span>Découvrir les boutiques et les produits</span></label>
-              <label class="interest-option"><input type="radio" name="interest" value="vente"><span>Vendre et développer ma boutique</span></label>
-              <label class="interest-option"><input type="radio" name="interest" value="achat"><span>Paiement et livraison des commandes</span></label>
-            </fieldset>
-            <button class="button button-green signup-submit" type="submit">M’inscrire pour en savoir plus <span aria-hidden="true">→</span></button>
-            <p class="form-privacy">En vous inscrivant, vous acceptez d’être recontacté au sujet de MarketCI. Vos coordonnées ne sont pas publiées.</p>
-            <p class="form-notice" id="form-notice" role="status" aria-live="polite"></p>
-            <p class="demo-notice">Démo : le formulaire ne transmet ni n’enregistre vos coordonnées.</p>
-          </form>
-        </div>
-      </div>
+    <section class="signup-panel container">
+      <div class="signup-intro"><p class="eyebrow"><span class="eyebrow-dot"></span> Une marketplace, mille possibilités</p><h1>MarketCI vous intéresse ?<br><span>Restons en contact.</span></h1><p>Recevez davantage d’informations sur la marketplace, ses catégories, ses boutiques et les prochaines étapes.</p><ul class="signup-list"><li><span aria-hidden="true">✓</span> Découvrez un site marchand généraliste.</li><li><span aria-hidden="true">✓</span> Suivez les nouveautés pour les clients et les vendeurs.</li><li><span aria-hidden="true">✓</span> Posez vos questions directement à l’équipe.</li></ul></div>
+      <div class="form-card"><h2>Demander des informations</h2><p>Indiquez comment nous pouvons vous renseigner.</p><form data-inquiry-form data-kind="information"><div class="form-grid"><div class="form-field"><label for="signup-name">Votre nom</label><input id="signup-name" name="name" autocomplete="name" maxlength="100" required></div><div class="form-field"><label for="signup-email">Votre adresse e-mail</label><input id="signup-email" name="email" type="email" autocomplete="email" maxlength="254" required></div><div class="form-field full-width"><label for="signup-interest">Je souhaite en savoir plus sur</label><select id="signup-interest" name="subject"><option>Les achats sur MarketCI</option><option>La vente sur MarketCI</option><option>Les catégories de produits</option><option>Les paiements et la livraison</option><option>Autre demande</option></select></div><div class="form-field full-width"><label for="signup-message">Un détail à nous préciser (facultatif)</label><textarea id="signup-message" name="message" rows="3" maxlength="5000" placeholder="Écrivez votre question ou votre besoin…"></textarea></div></div><div class="honeypot" aria-hidden="true"><label for="signup-website">Ne pas remplir</label><input id="signup-website" name="website" tabindex="-1" autocomplete="off"></div><button class="form-submit" type="submit">Envoyer ma demande <span aria-hidden="true">↗</span></button><p class="form-status" role="status" aria-live="polite"></p></form><p class="form-note">Votre demande est enregistrée dans notre base de données pour que l’équipe MarketCI puisse vous répondre.</p></div>
     </section>
-    <section class="signup-bottom">
-      <div class="container signup-bottom-inner">
-        <p class="eyebrow">Plus qu’une vitrine</p>
-        <h2>Une place pour les commerces<br><span>qui font vivre le quartier.</span></h2>
-        <p>MarketCI veut rapprocher les bonnes boutiques des personnes qui ont envie de les découvrir. Inscrivez-vous pour suivre cette aventure et recevoir des nouvelles à son sujet.</p>
-        <a class="text-link" href="index.html">En savoir plus sur MarketCI <span aria-hidden="true">→</span></a>
-      </div>
-    </section>
-    <section class="detail-cta"><div class="container"><div><p class="eyebrow">Envie d’en discuter ?</p><h2>Notre équipe est à <span>votre écoute.</span></h2></div><a class="button button-light" href="contact.html">Nous contacter <span aria-hidden="true">↗</span></a></div></section>
+    <section class="contact-cta container"><div><p class="eyebrow">Une demande plus précise ?</p><h2>Notre équipe peut vous répondre directement.</h2></div><a class="primary-button" href="contact.html">Nous contacter <span aria-hidden="true">↗</span></a></section>
   </main>
-  <footer class="site-footer"><div class="container footer-inner"><a class="brand brand-footer" href="index.html"><span class="brand-mark">M</span><span>market<span class="brand-accent">ci</span></span></a><p>Le commerce local, à portée de clic.</p><nav aria-label="Navigation de pied de page"><a href="vendeurs.html">Boutiques</a><a href="paiements.html">Paiement</a><a href="livraison.html">Livraison</a><a href="inscription.html">Recevoir les infos</a><a href="contact.html">Contact</a></nav><span class="copyright">© 2026 MarketCI</span></div></footer>
+  <footer class="site-footer"><div class="container footer-main"><div class="footer-brand"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">M</span><span>market<span class="brand-accent">ci</span></span></a><p>Tout ce que vous aimez.<br>Au même endroit.</p></div><div class="footer-column"><strong>Découvrir</strong><a href="index.html#categories">Catégories</a><a href="index.html#produits">Produits</a><a href="vendeurs.html">Boutiques</a></div><div class="footer-column"><strong>MarketCI</strong><a href="paiements.html">Paiement</a><a href="livraison.html">Livraison</a><a href="inscription.html">Recevoir les informations</a><a href="contact.html">Contact</a></div><div class="footer-news"><strong>Encore une question ?</strong><p>Nous serons ravis d’en parler avec vous.</p><a class="footer-signup" href="contact.html">Contacter l’équipe <span aria-hidden="true">→</span></a></div></div><div class="container footer-bottom"><span>© 2026 MarketCI. Le commerce ivoirien, à portée de clic.</span><span>Fait avec <b aria-label="amour">♥</b> en Côte d’Ivoire</span></div></footer>
 </body>
 </html>

@@ -3,89 +3,164 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Découvrez MarketCI : la marketplace qui rapproche les boutiques ivoiriennes et leurs clients.">
-  <title>MarketCI — Le commerce local, à portée de clic</title>
+  <meta name="theme-color" content="#f7f7f2">
+  <meta name="description" content="MarketCI, la marketplace ivoirienne pour acheter mode, maison, high-tech, beauté, alimentation et bien plus.">
+  <title>MarketCI — Tout ce qu’il vous faut, au même endroit</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
-<body>
+<body id="top">
+  <div class="announcement">
+    <p>Les bonnes trouvailles sont ici <span aria-hidden="true">✦</span> Imaginée pour la Côte d’Ivoire</p>
+    <a href="vendeurs.html">Vous êtes vendeur ? <span aria-hidden="true">↗</span></a>
+  </div>
+
   <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="index.html" aria-label="MarketCI, accueil"><span class="brand-mark">M</span><span>market<span class="brand-accent">ci</span></span></a>
-      <nav class="main-nav" aria-label="Navigation principale">
-        <a class="active" href="index.html">Accueil</a>
-        <a href="vendeurs.html">Boutiques</a>
-        <a href="paiements.html">Paiement</a>
-        <a href="livraison.html">Livraison</a>
-      </nav>
-      <a class="button button-dark nav-cta" href="compte.html">Créer un compte <span aria-hidden="true">↗</span></a>
+    <div class="container header-main">
+      <a class="brand" href="#" aria-label="MarketCI, accueil">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span>market<span class="brand-accent">ci</span></span>
+      </a>
+      <form class="search-form" role="search" id="search-form">
+        <label class="sr-only" for="site-search">Rechercher un produit ou une catégorie</label>
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input id="site-search" type="search" placeholder="Que recherchez-vous aujourd’hui ?" autocomplete="off">
+        <button type="submit">Rechercher</button>
+      </form>
+      <div class="header-actions">
+        <a class="seller-link" href="vendeurs.html"><span aria-hidden="true">↗</span><span>Vendre sur MarketCI</span></a>
+        <button class="cart-button" id="cart-button" type="button" aria-label="Votre panier, 0 article">
+          <span class="cart-icon" aria-hidden="true">▱</span><span>Panier</span><span class="cart-count" id="cart-count">0</span>
+        </button>
+      </div>
     </div>
+    <nav class="category-nav" aria-label="Navigation principale">
+      <div class="container nav-inner">
+        <a class="nav-category active" href="#categories" data-category="all">☰ <span>Toutes les catégories</span></a>
+        <a class="nav-category" href="#produits" data-category="Mode et accessoires">Mode</a>
+        <a class="nav-category" href="#produits" data-category="Téléphones et accessoires">Téléphones</a>
+        <a class="nav-category" href="#produits" data-category="Maison, meubles et décoration">Maison</a>
+        <a class="nav-category" href="#produits" data-category="Beauté et cosmétiques">Beauté</a>
+        <a class="nav-category" href="#produits" data-category="Alimentation et boissons">Épicerie</a>
+        <a class="nav-category" href="#offres">Promotions <span class="sale-tag">Bons plans</span></a>
+      </div>
+    </nav>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow"><span class="eyebrow-dot"></span> La marketplace pensée pour la Côte d’Ivoire</p>
-          <h1>Le commerce local.<br><span>En mieux.</span></h1>
-          <p class="hero-text">Trouvez votre prochain coup de cœur auprès des boutiques d’ici. Et pour les commerçants, une vitrine en ligne qui ouvre de nouvelles portes.</p>
-          <div class="hero-actions">
-            <a class="button button-green" href="inscription.html">Recevoir les informations <span aria-hidden="true">↗</span></a>
-            <a class="text-link" href="#fonctionnalites">Explorer les fonctionnalités <span aria-hidden="true">→</span></a>
-          </div>
-          <div class="hero-note"><span class="note-icon">✳</span><span>Une expérience simple, du premier clic à la livraison.</span></div>
-        </div>
-        <div class="hero-photo">
-          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1400&q=85" alt="Une commerçante accueille une cliente dans sa boutique">
-          <div class="photo-caption"><span class="caption-dot"></span><span>Les boutiques d’ici, tout près de vous</span></div>
-          <div class="photo-sticker"><span class="sticker-star">✳</span><span>Du local,<br>avec le sourire.</span></div>
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-dot"></span> La marketplace de tous vos coups de cœur</p>
+        <h1 id="hero-title">Tout ce que vous aimez.<br><span>Au même endroit.</span></h1>
+        <p class="hero-description">Mode, maison, high-tech, beauté, courses et bien plus encore : trouvez tout ce qu’il vous faut auprès des vendeurs d’ici.</p>
+        <a class="primary-button" href="#categories">Explorer les catégories <span aria-hidden="true">→</span></a>
+        <div class="hero-trust">
+          <span><b aria-hidden="true">✓</b> Des produits pour tous</span>
+          <span><b aria-hidden="true">✓</b> Paiement en FCFA</span>
+          <span><b aria-hidden="true">✓</b> Des informations claires</span>
         </div>
       </div>
-      <div class="container hero-bottom"><span>ACHETEZ LOCAL, VIVEZ MIEUX</span><span class="hero-bottom-line"></span><span>ABIDJAN · CÔTE D’IVOIRE</span></div>
-    </section>
-
-    <section class="intro section-pad">
-      <div class="container intro-grid">
-        <p class="eyebrow">Le bon endroit pour trouver</p>
-        <div><h2>Tout ce que vous cherchez.<br><span>Et ce que vous allez aimer.</span></h2>
-        <p class="section-lead">MarketCI rassemble les boutiques, les marques et les bonnes idées en un seul endroit. Découvrez une autre façon d’acheter — plus pratique, plus proche, plus locale.</p></div>
+      <div class="hero-visual">
+        <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Sélection colorée de vêtements et d’accessoires">
+        <div class="hero-photo-shade"></div>
+        <div class="hero-note"><span class="hero-note-icon" aria-hidden="true">✳</span><span>Du nouveau, <strong>chaque jour.</strong></span></div>
+        <div class="hero-deal"><span class="deal-label">À découvrir</span><strong>Vos envies<br>n’ont plus de limites.</strong><a href="#produits">Voir la sélection <span aria-hidden="true">↗</span></a></div>
+        <span class="hero-spark" aria-hidden="true">✳</span>
       </div>
     </section>
 
-    <section class="features section-pad" id="fonctionnalites">
-      <div class="container">
-        <div class="section-heading"><div><p class="eyebrow">Tout est pensé pour vous</p><h2>Une marketplace.<br><span>De belles possibilités.</span></h2></div><p>Que vous soyez ici pour dénicher une pépite ou faire grandir votre boutique, votre prochaine étape commence ici.</p></div>
-        <div class="feature-grid">
-          <a class="feature-card feature-card-large" href="vendeurs.html">
-            <div class="feature-image"><img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=1200&q=85" alt="Vitrine accueillante d’une boutique de quartier"><span class="image-label">01 / POUR LES VENDEURS</span></div>
-            <div class="feature-body"><span class="feature-icon">↗</span><div><h3>Votre boutique mérite d’être vue.</h3><p>Présentez vos produits, affirmez votre identité et faites découvrir votre savoir-faire à plus de clients.</p><span class="card-link">Découvrir l’espace vendeurs <b aria-hidden="true">→</b></span></div></div>
-          </a>
-          <a class="feature-card" href="paiements.html">
-            <div class="feature-image"><img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=900&q=85" alt="Une cliente effectue un achat dans une boutique"><span class="image-label">02 / PAIEMENT</span></div>
-            <div class="feature-body"><span class="feature-icon">♡</span><div><h3>Un achat en toute sérénité.</h3><p>Un parcours de commande clair et des options de paiement adaptées à vos habitudes.</p><span class="card-link">Voir comment ça marche <b aria-hidden="true">→</b></span></div></div>
-          </a>
-          <a class="feature-card" href="livraison.html">
-            <div class="feature-image"><img src="https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=900&q=85" alt="Un colis soigneusement préparé pour son destinataire"><span class="image-label">03 / LIVRAISON</span></div>
-            <div class="feature-body"><span class="feature-icon">⌁</span><div><h3>Vos trouvailles, jusqu’à vous.</h3><p>Retrouvez les informations utiles pour recevoir votre commande sans mauvaise surprise.</p><span class="card-link">En savoir plus sur la livraison <b aria-hidden="true">→</b></span></div></div>
-          </a>
+    <section class="benefits" aria-label="Les avantages MarketCI">
+      <div class="container benefits-inner">
+        <div class="benefit"><span class="benefit-icon" aria-hidden="true">⌖</span><div><strong>Proche de vous</strong><span>Des vendeurs en Côte d’Ivoire</span></div></div>
+        <div class="benefit"><span class="benefit-icon" aria-hidden="true">◇</span><div><strong>Un grand choix</strong><span>20 catégories pour tout trouver</span></div></div>
+        <div class="benefit"><span class="benefit-icon" aria-hidden="true">♧</span><div><strong>Des étapes claires</strong><span>Les détails avant de commander</span></div></div>
+        <div class="benefit"><span class="benefit-icon" aria-hidden="true">⌁</span><div><strong>Pensée pour Abidjan</strong><span>Les modalités expliquées avant achat</span></div></div>
+      </div>
+    </section>
+
+    <section class="section container feature-overview" aria-labelledby="features-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Une expérience pensée pour vous</p><h2 id="features-title">Acheter en ligne, en toute simplicité.</h2></div>
+        <a class="section-link" href="inscription.html">Recevoir les informations <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="feature-overview-grid">
+        <a class="overview-card" href="vendeurs.html"><span class="overview-icon" aria-hidden="true">⌂</span><span class="overview-copy"><strong>Des boutiques à découvrir</strong><span>Rencontrez les vendeurs et explorez leurs sélections.</span><span class="overview-link">Découvrir les boutiques <b aria-hidden="true">→</b></span></span></a>
+        <a class="overview-card" href="paiements.html"><span class="overview-icon" aria-hidden="true">◇</span><span class="overview-copy"><strong>Un paiement expliqué clairement</strong><span>Retrouvez les informations utiles avant de commander.</span><span class="overview-link">En savoir plus <b aria-hidden="true">→</b></span></span></a>
+        <a class="overview-card" href="livraison.html"><span class="overview-icon" aria-hidden="true">⌁</span><span class="overview-copy"><strong>Une livraison pratique</strong><span>Découvrez comment recevoir vos achats à Abidjan.</span><span class="overview-link">Voir la livraison <b aria-hidden="true">→</b></span></span></a>
+      </div>
+    </section>
+
+    <section class="section container categories-section" id="categories">
+      <div class="section-heading">
+        <div><p class="eyebrow">Un monde de choix</p><h2>Qu’est-ce qui vous ferait plaisir ?</h2></div>
+        <a class="section-link" href="#produits">Voir les produits <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="category-grid" id="category-grid" aria-label="Catégories de produits"></div>
+    </section>
+
+    <section class="promo-section" id="offres">
+      <div class="container promo-banner">
+        <div class="promo-copy">
+          <p class="eyebrow">Les belles affaires du moment</p>
+          <h2>De belles trouvailles,<br><span>à prix doux.</span></h2>
+          <p>Faites-vous plaisir et découvrez les sélections de nos boutiques partenaires.</p>
+          <a class="promo-button" href="#produits">Découvrir la sélection <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="promo-art" aria-hidden="true">
+          <div class="promo-circle"></div>
+          <div class="promo-product promo-product-one">✿</div>
+          <div class="promo-product promo-product-two">◒</div>
+          <div class="promo-product promo-product-three">⌁</div>
+          <span class="promo-star">✳</span>
+          <span class="promo-caption">Made with<br><strong>love, in CI</strong></span>
         </div>
       </div>
     </section>
 
-    <section class="local-section">
-      <div class="container local-grid">
-        <div class="local-photo"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85" alt="Sélection de vêtements proposés par une boutique locale"><span class="photo-tag">Du style, et du sens.</span></div>
-        <div class="local-copy"><p class="eyebrow">Le commerce qui nous ressemble</p><h2>Chaque achat peut faire grandir <span>une belle histoire.</span></h2><p>En découvrant les boutiques sur MarketCI, vous donnez de la visibilité aux entrepreneurs locaux et trouvez des produits choisis avec soin.</p><a class="button button-dark" href="vendeurs.html">Rencontrer nos vendeurs <span aria-hidden="true">↗</span></a></div>
+    <section class="section container products-section" id="produits">
+      <div class="section-heading products-heading">
+        <div><p class="eyebrow">La sélection MarketCI</p><h2 id="products-title">À découvrir pour vous</h2></div>
+        <div class="product-tools">
+          <label class="sr-only" for="sort-products">Trier les produits</label>
+          <select id="sort-products">
+            <option value="featured">À découvrir</option>
+            <option value="price-asc">Prix croissant</option>
+            <option value="price-desc">Prix décroissant</option>
+          </select>
+          <button class="view-all" id="view-all" type="button">Tout voir <span aria-hidden="true">→</span></button>
+        </div>
       </div>
+      <p class="results-message" id="results-message" aria-live="polite"></p>
+      <div class="product-grid" id="product-grid"></div>
+      <p class="empty-state" id="empty-state" hidden>Aucun produit ne correspond à votre recherche. Essayez un autre mot-clé ou une autre catégorie.</p>
     </section>
 
-    <section class="closing section-pad">
-      <div class="container closing-inner"><p class="eyebrow">Le commerce local vous attend</p><h2>Et si votre prochaine<br><span>belle découverte</span> était ici ?</h2><a class="button button-light" href="contact.html">Parlons de MarketCI <span aria-hidden="true">↗</span></a><span class="closing-spark" aria-hidden="true">✳</span></div>
+    <section class="seller-section" id="vendeurs">
+      <div class="container seller-banner">
+        <div><p class="eyebrow">Vous avez une boutique ?</p><h2>Vos produits méritent<br>une belle vitrine.</h2><p>Rejoignez MarketCI et faites découvrir votre savoir-faire à de nouveaux clients partout à Abidjan.</p></div>
+        <a class="primary-button seller-button" href="vendeurs.html">Découvrir l’espace vendeur <span aria-hidden="true">↗</span></a>
+        <span class="seller-decoration" aria-hidden="true">✳</span>
+      </div>
+    </section>
+    <section class="contact-cta container" aria-label="Contacter MarketCI">
+      <div><p class="eyebrow">Une question ? Parlons-en.</p><h2>Besoin d’en savoir plus sur MarketCI ?</h2></div>
+      <a class="primary-button" href="contact.html">Contacter l’équipe <span aria-hidden="true">↗</span></a>
     </section>
   </main>
 
-  <footer class="site-footer"><div class="container footer-inner"><a class="brand brand-footer" href="index.html"><span class="brand-mark">M</span><span>market<span class="brand-accent">ci</span></span></a><p>Le commerce local, à portée de clic.</p><nav aria-label="Navigation de pied de page"><a href="vendeurs.html">Boutiques</a><a href="paiements.html">Paiement</a><a href="livraison.html">Livraison</a><a href="inscription.html">Recevoir les infos</a><a href="compte.html">Créer un compte</a><a href="contact.html">Contact</a></nav><span class="copyright">© 2026 MarketCI</span></div></footer>
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <div class="footer-brand"><a class="brand" href="#" aria-label="MarketCI, retour en haut"><span class="brand-mark" aria-hidden="true">M</span><span>market<span class="brand-accent">ci</span></span></a><p>Tout ce que vous aimez.<br>Au même endroit.</p></div>
+      <div class="footer-column"><strong>Découvrir</strong><a href="#categories">Toutes les catégories</a><a href="#produits">Nos produits</a><a href="#offres">Les bons plans</a></div>
+      <div class="footer-column"><strong>MarketCI</strong><a href="vendeurs.html">Devenir vendeur</a><a href="paiements.html">Paiement</a><a href="livraison.html">Livraison</a><a href="contact.html">Nous contacter</a><a href="/admin">Administration</a></div>
+      <div class="footer-news"><strong>Découvrez MarketCI avant tout le monde.</strong><p>Recevez plus d’informations sur la marketplace.</p><a class="footer-signup" href="inscription.html">M’inscrire pour en savoir plus <span aria-hidden="true">→</span></a></div>
+    </div>
+    <div class="container footer-bottom"><span>© 2026 MarketCI. Le commerce ivoirien, à portée de clic.</span><span>Fait avec <b aria-label="amour">♥</b> en Côte d’Ivoire</span></div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
