@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f7f2">
+    <meta name="description" content="Une liste de tâches simple et apaisante pour organiser sa journée.">
+    <title>Todo — une chose après l’autre</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Todo, accueil">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="m6 12.5 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span>todo<span class="brand-period">.</span></span>
+        </a>
+        <span class="local-badge"><span aria-hidden="true"></span> Vos tâches restent privées</span>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="date-label" id="today-date"></p>
+        <h1 id="page-title">Une chose<br class="mobile-break"> après l’autre<span>.</span></h1>
+        <p class="intro-copy">Faites de la place dans votre tête. Le reste peut attendre.</p>
+      </section>
+
+      <section class="progress-card" aria-label="Progression de la journée">
+        <div class="progress-copy">
+          <div>
+            <p class="section-kicker">Votre progression</p>
+            <p class="progress-count" id="progress-count">0 tâche terminée</p>
+          </div>
+          <span class="progress-emoji" aria-hidden="true">✦</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-label="Tâches terminées" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-track">
+          <span id="progress-fill"></span>
+        </div>
+      </section>
+
+      <section class="tasks-section" aria-labelledby="tasks-heading">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Votre liste</p>
+            <h2 id="tasks-heading">Aujourd’hui</h2>
+          </div>
+          <span class="task-total" id="task-total">0</span>
+        </div>
+
+        <form class="task-form" id="task-form">
+          <label class="sr-only" for="task-input">Ajouter une tâche</label>
+          <input id="task-input" name="task" type="text" maxlength="120" placeholder="Qu’aimeriez-vous accomplir ?" autocomplete="off" required>
+          <button class="add-button" type="submit" aria-label="Ajouter la tâche">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </form>
+
+        <div class="list-toolbar">
+          <div class="filters" role="group" aria-label="Filtrer les tâches">
+            <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">Tout</button>
+            <button class="filter-button" type="button" data-filter="active" aria-pressed="false">À faire</button>
+            <button class="filter-button" type="button" data-filter="completed" aria-pressed="false">Terminées</button>
+          </div>
+          <button class="clear-button" id="clear-completed" type="button" disabled>Tout effacer</button>
+        </div>
+
+        <ul class="task-list" id="task-list" aria-label="Liste des tâches"></ul>
+        <p class="status-message" id="status-message" role="status" aria-live="polite"></p>
+      </section>
+
+      <footer class="app-footer">
+        <span>Un petit pas, c’est déjà un pas.</span>
+        <span class="footer-sparkle" aria-hidden="true">✳</span>
+      </footer>
+    </main>
+  </body>
+</html>
