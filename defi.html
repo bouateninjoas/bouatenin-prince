@@ -1,154 +1,190 @@
+
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Prince Manasse — Développeur Frontend</title>
-  <meta name="description" content="Prince Manasse, développeur frontend passionné par les interfaces soignées et accessibles." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Cards</title>
+
   <style>
-    :root {
-      --bg: #0b0b1a;
-      --fg: #f3f1ea;
-      --muted: #a3a6b8;
-      --cyan: #3ee6f0;
-      --pink: #ff3fb4;
-      --border: rgba(255,255,255,.14);
+    * {
+      box-sizing: border-box;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: "Space Grotesk", sans-serif; background: var(--bg); color: var(--fg); }
 
-    .hero {
-      position: relative; min-height: 100vh; display: flex; align-items: center;
-      padding: 6rem 1.5rem; overflow: hidden;
-      background: radial-gradient(ellipse at 80% 20%, rgba(255,63,180,.25), transparent 55%), var(--bg);
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: Arial, sans-serif;
+      background: #f4f6fb;
     }
-    .grid {
-      position: absolute; inset: -50% -50% 0;
-      background-image:
-        linear-gradient(rgba(62,230,240,.18) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(62,230,240,.18) 1px, transparent 1px);
-      background-size: 60px 60px;
-      transform: perspective(600px) rotateX(60deg); transform-origin: bottom;
-      animation: grid-move 4s linear infinite;
-      -webkit-mask-image: linear-gradient(to top, black, transparent 70%);
-      mask-image: linear-gradient(to top, black, transparent 70%);
-    }
-    .orb {
-      position: absolute; right: -10rem; bottom: -10rem; width: 32rem; height: 32rem; border-radius: 50%;
-      background: radial-gradient(circle, rgba(62,230,240,.35), transparent 70%);
-      filter: blur(40px); animation: float 8s ease-in-out infinite;
-    }
-    .container { position: relative; width: 100%; max-width: 56rem; margin: 0 auto; }
 
-    .hello { font-family: monospace; font-size: .9rem; text-transform: uppercase; letter-spacing: .3em; color: var(--cyan); margin-bottom: 1.5rem; }
-    .hello::after { content: "_"; animation: blink 1s steps(1) infinite; }
-
-    h1, h2, h3 { font-family: "Orbitron", sans-serif; }
-    h1 { font-size: clamp(3rem, 8vw, 4.5rem); font-weight: 800; text-transform: uppercase; line-height: .95; }
-    .neon {
-      background: linear-gradient(90deg, var(--cyan), var(--pink), var(--cyan)); background-size: 200% auto;
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-      animation: shine 5s linear infinite;
-      filter: drop-shadow(0 0 18px rgba(62,230,240,.5));
+    .pricing-container {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      flex-wrap: wrap;
+      gap: 25px;
+      max-width: 1000px;
+      margin: auto;
     }
-    .subtitle { margin-top: 1.5rem; max-width: 42rem; font-size: clamp(1.2rem, 2.5vw, 1.5rem); color: var(--muted); }
 
-    .chips { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .75rem; list-style: none; }
-    .chip, .card {
-      border: 1px solid var(--border); background: rgba(62,230,240,.06);
-      backdrop-filter: blur(6px); transition: all .3s;
+    .pricing {
+      width: 300px;
+      padding: 30px 25px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .chip { border-radius: 999px; padding: .4rem 1rem; font-size: .9rem; }
-    .chip:hover, .card:hover { border-color: var(--cyan); box-shadow: 0 0 16px rgba(62,230,240,.5); }
 
-    .goal { margin-top: 2rem; max-width: 36rem; line-height: 1.7; color: var(--muted); }
+    .pricing:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .price {
+      font-size: 30px;
+      font-weight: bold;
+      color: #16a34a;
+    }
+
+    .period {
+      font-size: 14px;
+      color: #777;
+    }
+
+    .features {
+      list-style: none;
+      padding: 0;
+      margin: 25px 0;
+      text-align: left;
+    }
+
+    .features li {
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
 
     .btn {
-      display: inline-flex; align-items: center; gap: .75rem; margin-top: 3rem;
-      padding: 1rem 2rem; border-radius: 999px; background: var(--cyan); color: var(--bg);
-      font-weight: 500; text-decoration: none;
-      box-shadow: 0 12px 40px -12px rgba(62,230,240,.7);
-      transition: transform .2s; animation: pulse 2.5s ease-in-out infinite;
+      width: 100%;
+      padding: 13px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
     }
-    .btn:hover { transform: translateY(-2px); }
 
-    .projects { padding: 6rem 1.5rem; }
-    .projects .container { max-width: 64rem; }
-    h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; text-transform: uppercase; }
-    .cards { margin-top: 3rem; display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-    .card { border-radius: 1rem; padding: 1.5rem; }
-    .num { font-family: monospace; font-size: .75rem; letter-spacing: .2em; color: var(--cyan); }
-    .card h3 { margin-top: .75rem; font-size: 1.1rem; font-weight: 600; }
-    .card p { margin-top: .75rem; font-size: .9rem; line-height: 1.6; color: var(--muted); }
-    .card .tags { margin-top: 1.5rem; font-size: .75rem; color: var(--pink); }
-
-    .reveal { opacity: 0; animation: reveal .9s cubic-bezier(.2,.8,.2,1) forwards; }
-
-    @keyframes grid-move { to { background-position: 0 60px; } }
-    @keyframes float { 50% { transform: translate(-4rem,-3rem) scale(1.15); } }
-    @keyframes shine { to { background-position: 200% center; } }
-    @keyframes blink { 50% { opacity: 0; } }
-    @keyframes pulse { 50% { box-shadow: 0 0 40px rgba(62,230,240,.8); } }
-    @keyframes reveal {
-      from { opacity: 0; transform: translateY(24px); filter: blur(8px); }
-      to { opacity: 1; transform: none; filter: none; }
+    .btn:hover {
+      background: #1d4ed8;
     }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::after { animation: none !important; opacity: 1 !important; }
+
+    .btn:focus-visible {
+      outline: 3px solid #93c5fd;
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 600px) {
+      .pricing {
+        width: 100%;
+        max-width: 350px;
+      }
     }
   </style>
 </head>
-<body>
-  <main class="hero">
-    <div class="grid" aria-hidden="true"></div>
-    <div class="orb" aria-hidden="true"></div>
-    <section class="container">
-      <p class="hello reveal">Bonjour, je suis</p>
-      <h1 class="neon reveal" style="animation-delay:.15s">Prince Manasse</h1>
-      <p class="subtitle reveal" style="animation-delay:.3s">
-        Développeur frontend — je transforme des idées en interfaces claires, rapides et accessibles.
-      </p>
-      <ul class="chips reveal" style="animation-delay:.45s">
-        <li class="chip">React &amp; TypeScript</li>
-        <li class="chip">Design d'interface</li>
-        <li class="chip">Animations</li>
-        <li class="chip">Accessibilité</li>
-      </ul>
-      <p class="goal reveal" style="animation-delay:.6s">
-        Mon objectif : créer des expériences web qui donnent envie d'être utilisées, et grandir
-        au sein d'une équipe produit ambitieuse.
-      </p>
-      <a href="#projets" class="btn reveal" style="animation-delay:.75s">Voir mes projets <span aria-hidden="true">→</span></a>
-    </section>
-  </main>
 
-  <section id="projets" class="projects">
-    <div class="container">
-      <h2 class="neon">Mes projets</h2>
-      <div class="cards">
-        <article class="card">
-          <p class="num">01</p>
-          <h3>Portfolio néon</h3>
-          <p>Cette page : animations CSS, design futuriste et typographie Orbitron.</p>
-          <p class="tags">HTML · CSS</p>
-        </article>
-        <article class="card">
-          <p class="num">02</p>
-          <h3>App météo</h3>
-          <p>Prévisions en temps réel avec une interface claire et animée.</p>
-          <p class="tags">JavaScript · API</p>
-        </article>
-        <article class="card">
-          <p class="num">03</p>
-          <h3>Todo minimaliste</h3>
-          <p>Gestion de tâches rapide, accessible et sauvegardée localement.</p>
-          <p class="tags">JavaScript · UX</p>
-        </article>
-      </div>
-    </div>
-  </section>
+<body>
+
+  <div class="pricing-container" id="pricing-container"></div>
+
+  <script>
+    // Reusable pricing card component
+    function Card(title, price, period, features, buttonText) {
+      const card = document.createElement("div");
+      card.className = "pricing";
+
+      const heading = document.createElement("h2");
+      heading.className = "title";
+      heading.textContent = title;
+
+      const priceElement = document.createElement("p");
+      priceElement.className = "price";
+      priceElement.textContent = price;
+
+      const periodElement = document.createElement("span");
+      periodElement.className = "period";
+      periodElement.textContent = period;
+
+      const list = document.createElement("ul");
+      list.className = "features";
+
+      features.forEach(feature => {
+        const item = document.createElement("li");
+        item.textContent = feature;
+        list.appendChild(item);
+      });
+
+      const button = document.createElement("button");
+      button.className = "btn";
+      button.textContent = buttonText;
+
+      button.addEventListener("click", () => {
+        alert("You selected the " + title + " plan!");
+      });
+
+      card.append(
+        heading,
+        priceElement,
+        periodElement,
+        list,
+        button
+      );
+
+      return card;
+    }
+
+    // Create pricing cards
+    const container = document.getElementById("pricing-container");
+
+    container.appendChild(
+      Card(
+        "Basic Plan",
+        "$9.99",
+        "/month",
+        ["1 GB Storage", "Basic Support", "All Core Features"],
+        "Start Trial"
+      )
+    );
+
+    container.appendChild(
+      Card(
+        "Pro Plan",
+        "$19.99",
+        "/month",
+        ["10 GB Storage", "Priority Support", "Advanced Features"],
+        "Choose Pro"
+      )
+    );
+
+    container.appendChild(
+      Card(
+        "Premium Plan",
+        "$29.99",
+        "/month",
+        ["Unlimited Storage", "24/7 Support", "All Premium Features"],
+        "Get Premium"
+      )
+    );
+  </script>
+
 </body>
 </html>
